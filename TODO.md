@@ -1,26 +1,29 @@
 # Shred City - TODO & Roadmap
 
-## Planning Phase ✓
+## Planning Phase ✅ COMPLETE
 
-### Decision Points Needed
+### Decision Points ✅
 
-- [ ] Choose platform (iOS-first, Android-first, or React Native for both)
-- [ ] Choose tech stack (React Native + Firebase vs React Native + SQLite vs Native)
-- [ ] Define monetization strategy (free, one-time purchase, subscription, ads)
-- [ ] Choose design system/component library
-- [ ] Finalize MVP feature set (review PLAN.md Phase 1)
+- [x] Choose platform → **Web-first (PWA)**
+- [x] Choose tech stack → **Next.js 14 + TypeScript + Supabase + IndexedDB**
+- [x] Choose auth → **Supabase Auth (Google + Apple OAuth)**
+- [x] Choose design system → **TailwindCSS + Shadcn/ui (optional)**
+- [x] Finalize MVP feature set → **See PLAN.md Phase 1**
+- [ ] Define monetization strategy (deferred - focus on MVP)
 
-### Design Work
+### Design Work (Next Up)
 
 - [ ] Create wireframes for core screens:
-  - [ ] Home/Dashboard
-  - [ ] Active Workout screen
-  - [ ] Exercise entry/logging
-  - [ ] History/Progress view
-  - [ ] Routine builder
+  - [ ] Sign-in screen
+  - [ ] Home screen (Start Workout options)
+  - [ ] Active Workout screen (the critical screen)
+  - [ ] Exercise selection
+  - [ ] Set logging interface
+  - [ ] History view
 - [ ] Define color palette and branding
-- [ ] Create app icon and splash screen
-- [ ] Design component library (buttons, cards, inputs)
+- [ ] Choose typography
+- [ ] Create app icon and splash screen (later)
+- [ ] Dark mode color scheme
 
 ---
 
@@ -28,26 +31,54 @@
 
 ### Setup & Infrastructure
 
-- [ ] Initialize project (React Native / Native app)
-- [ ] Set up development environment
-- [ ] Configure local database (SQLite / Realm)
-- [ ] Set up state management (Redux / Zustand / Context)
-- [ ] Configure navigation (React Navigation / Native navigation)
-- [ ] Set up TypeScript (if using)
+- [ ] Initialize Next.js 14 project with TypeScript
+- [ ] Set up TailwindCSS
+- [ ] Configure Supabase project
+  - [ ] Create Supabase account/project
+  - [ ] Set up Google OAuth credentials
+  - [ ] Set up Apple Sign In credentials (later)
+  - [ ] Configure Supabase Auth in Next.js
+- [ ] Set up local database layer
+  - [ ] Install and configure Dexie.js (IndexedDB wrapper)
+  - [ ] Create database schema in Dexie
+  - [ ] Test local CRUD operations
+- [ ] Set up TanStack Query for cache management
+- [ ] Configure PWA manifest and service worker
+- [ ] Set up Vercel project for deployment
+- [ ] Create basic folder structure and routing
 
 ### Data Layer
 
-- [ ] Define database schema
-- [ ] Create database models/entities:
-  - [ ] User
-  - [ ] Exercise
-  - [ ] Workout Routine
-  - [ ] Workout Session
-  - [ ] Set
-  - [ ] Personal Record
-- [ ] Implement database CRUD operations
+**Dual Database Setup:**
+
+**Supabase (Cloud):**
+
+- [ ] Define PostgreSQL schema (tables, relationships, RLS policies)
+- [ ] Create migrations for:
+  - [ ] users (profiles)
+  - [ ] exercises (exercise library)
+  - [ ] workout_templates
+  - [ ] workout_sessions
+  - [ ] exercise_instances
+  - [ ] sets
+- [ ] Set up Row Level Security (RLS) policies
 - [ ] Create seed data for exercise library
-- [ ] Implement data migration system
+- [ ] Test CRUD operations via Supabase client
+
+**IndexedDB (Local):**
+
+- [ ] Define Dexie schema (mirror of Supabase)
+- [ ] Create TypeScript types/interfaces (shared between both DBs)
+- [ ] Implement local CRUD operations
+- [ ] Create seed data sync (download exercises on first load)
+
+**Sync Layer:**
+
+- [ ] Build sync queue for pending operations
+- [ ] Implement background sync worker
+- [ ] Add online/offline detection
+- [ ] Create conflict resolution logic (last-write-wins for MVP)
+- [ ] Test sync with Supabase Realtime subscriptions
 
 ### Core Features
 
@@ -246,4 +277,49 @@ _As bugs are discovered, track them here_
 
 _Keep track of important decisions and rationale here_
 
-**[Date]** - Initial planning documents created
+### **October 18, 2025** - Planning Phase Complete
+
+**Tech Stack Finalized:**
+
+- Next.js 14 (App Router) + TypeScript
+- Supabase (Auth + Postgres)
+- IndexedDB + Dexie.js (local storage)
+- TailwindCSS + Shadcn/ui
+- PWA configuration
+- Vercel deployment
+
+**Key Architecture Decisions:**
+
+- **Offline-first**: All writes to IndexedDB first (< 10ms), sync to cloud in background
+- **Auth**: Google OAuth + Apple Sign In (via Supabase)
+- **Per-side weight tracking**: Store weight as per-side for barbells, per-hand for dumbbells
+- **Series markers**: A/B/C for organizing exercises (main lifts vs supersets)
+- **Reps-last entry**: Enter weight before set, log reps after completion
+- **Auto-save**: No manual save button, save as you go
+- **Multi-device conflicts**: Last-write-wins with timestamps for MVP (defer complex merging)
+
+**MVP Scope:**
+
+- Focus on workout logging speed (30-second rest period target)
+- Start empty workout OR from last week's workout
+- Exercise library (strength-focused)
+- Equipment type selection per exercise (Barbell, Dumbbell, Kettlebell, Trap Bar, Landmine)
+- History view
+- NO rest timer for MVP (Phase 2)
+- NO PRs/analytics for MVP (Phase 2)
+- NO bodyweight exercise handling for MVP (deferred)
+
+**Development Approach:**
+
+- Hybrid learning/building model
+- Brenden drives when comfortable, AI assists on complex parts
+- Explain everything, no magic
+- Document decisions and patterns as we go
+
+**Deferred Decisions:**
+
+- Monetization strategy
+- Bodyweight exercise handling
+- Mid-workout editing capabilities
+- Calendar view alternative
+- Social features

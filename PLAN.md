@@ -46,17 +46,23 @@ Existing weight training apps are clunky, slow, and don't match how lifters actu
 
 **Starting a Workout:**
 
-- Select or create a workout (e.g., "Strength Training Mondays", "Alpha Workout")
-- Workout templates are editable and track consistency by name
+- Two options on start screen:
+  1. "Start Empty Workout" - Build workout from scratch
+  2. "Start from Last Week" - Load previous week's workout as template
+- History view available to see past workouts
+- Auto-save as you go (no explicit save button needed)
 
 **Exercise Setup:**
 
-- Add exercise from library
+- Use "+ Add Exercise" button during workout
+- If starting from template/last week, exercises are pre-populated
+- Select exercise from library
 - Select equipment type: Barbell, Dumbbell, Kettlebell, Trap Bar, Landmine (one-sided)
 - Equipment selection is per-exercise (not per-set)
-- Assign series marker: A, B, or C for visual grouping
+- Assign series marker: A, B, or C for visual grouping and ordering
   - A Series: Main compound lifts (typically single exercise)
   - B/C Series: Supersets/circuits (typically 2+ exercises)
+  - Exercises display/sort in series order: A → B → C
 
 **Logging a Set (The Critical Flow):**
 
@@ -206,34 +212,48 @@ Existing weight training apps are clunky, slow, and don't match how lifters actu
 
 ## Technical Architecture
 
-### Technology Stack (TBD)
+### Technology Stack ✅ DECIDED
 
-**Frontend Options:**
+**Platform:**
 
-- React Native (iOS + Android from one codebase)
-- Native Swift (iOS) or Kotlin (Android)
-- Flutter
+- **Web-first** (PWA - Progressive Web App)
+- Installable to home screen (looks/feels like native app)
+- Future: Wrap with Capacitor for true native if needed
 
-**Backend Options:**
+**Frontend:**
 
-- Firebase (quickest MVP)
-- Supabase (open-source alternative)
-- Custom API (Node.js/Express, Python/FastAPI)
+- **Next.js 14** (App Router)
+- **TypeScript** (type safety)
+- **TailwindCSS** (styling)
+- **Shadcn/ui** (component library - optional)
 
-**Database:**
+**Backend & Auth:**
 
-- SQLite (local-first approach for speed)
-- PostgreSQL (if using backend)
-- Firebase/Firestore
+- **Supabase**
+  - PostgreSQL database (cloud source of truth)
+  - Auth (Google OAuth + Apple Sign In)
+  - Realtime subscriptions (for multi-device sync)
+  - Row Level Security (RLS) for data isolation
 
-**Recommendation:** Start with **React Native + Firebase** for rapid MVP, or **React Native + SQLite** for a true "snappy" local-first experience.
+**Local Storage & Sync:**
+
+- **IndexedDB** (browser local storage for instant access)
+- **Dexie.js** (makes IndexedDB developer-friendly)
+- **Custom sync engine** (DIY for MVP, can upgrade to PowerSync later)
+- **TanStack Query** (optimistic updates & cache management)
+
+**Deployment:**
+
+- **Vercel** (hosting, edge functions)
 
 ### Architecture Principles
 
-1. **Local-First**: Data stored locally for instant access
-2. **Offline-First**: Full functionality without internet
-3. **Sync When Possible**: Background sync for backups/multi-device
-4. **Minimal Dependencies**: Keep it lean and fast
+1. **Offline-First**: All operations work without internet
+2. **Instant Writes**: Write to IndexedDB immediately (< 10ms)
+3. **Background Sync**: Sync to Supabase when online
+4. **No Data Loss**: Cloud backup ensures data safety
+5. **Simple Conflicts**: Last-write-wins with timestamps (merge strategy for MVP)
+6. **Multi-device Support**: Built in, but optimized for single-device use initially
 
 ---
 
@@ -339,11 +359,84 @@ Existing weight training apps are clunky, slow, and don't match how lifters actu
 
 ## Open Questions
 
-1. What platform to launch on first? (iOS, Android, or both)
-2. Free vs. Premium model? (One-time purchase, subscription, or freemium)
-3. Social features - yes or no for MVP?
-4. Web version needed?
+1. ~~What platform to launch on first?~~ ✅ **ANSWERED:** Web-first (PWA)
+2. ~~Auth system?~~ ✅ **ANSWERED:** Supabase Auth (Google + Apple OAuth)
+3. Free vs. Premium model? (One-time purchase, subscription, freemium)
+4. Social features - yes or no for MVP? **Leaning NO for MVP**
 5. Target launch timeline?
+6. Bodyweight exercise handling (pull-ups, dips, etc.)
+7. Calendar view alternative (not traditional calendar UI)
+8. Mid-workout editing capabilities (delete exercise, reorder, etc.)
+
+---
+
+## Development Approach
+
+### Collaboration Philosophy
+
+**This is a LEARNING PROJECT** - we build together, not just AI coding.
+
+**Brenden's Role:**
+
+- Write code when comfortable
+- Drive feature decisions
+- Learn patterns and architecture
+- Own the vision
+
+**AI Assistant Role:**
+
+- Scaffold complex boilerplate
+- Explain patterns and best practices
+- Heavy lifting on tricky implementations
+- Code review and suggestions
+- Answer "why" questions
+
+**How We Work:**
+
+1. **Plan First**: Discuss approach before coding
+2. **Explain Everything**: AI explains what code does and why
+3. **Iterate Together**: Brenden codes → AI reviews → refine
+4. **Document Learnings**: Capture decisions and patterns in this doc
+5. **No Magic**: Every piece of code should make sense to Brenden
+
+### Developer Preferences
+
+**Coding Style:** (To be filled in as we code)
+
+- _We'll document your preferences here as we discover them_
+- _Example: Prefer function components, explicit types, etc._
+
+**Tools & Setup:**
+
+- IDE: Cursor
+- OS: macOS
+- Shell: zsh
+- Package Manager: (npm, yarn, pnpm - to decide)
+
+**Learning Goals:**
+
+- Next.js App Router patterns
+- TypeScript best practices
+- Offline-first architecture
+- Supabase integration
+- State management
+
+### How to Use This Document
+
+**For AI Assistants:**
+
+- Read this FIRST before making suggestions
+- Follow the tech stack decisions (no suggesting alternatives)
+- Respect the learning approach (explain, don't just code)
+- Reference data models when designing features
+- Stay aligned with core philosophy (snappy, simple, focused)
+
+**For Brenden:**
+
+- Point AI here when starting new conversations
+- Update preferences as you discover them
+- Add decisions as they're made
+- Keep it as source of truth
 
 ---
 

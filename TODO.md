@@ -8,8 +8,8 @@ Ship a fast, useful plate calculator. Nothing else until this is live.
 
 ### Setup
 
-- [ ] Initialize Next.js project with App Router + TypeScript
-- [ ] Install and configure TailwindCSS
+- [x] Initialize Next.js project with App Router + TypeScript
+- [x] Install and configure SCSS + CSS Modules
 - [ ] Create GitHub repository
 - [ ] Set up deployment (Vercel or Netlify)
 - [ ] Basic folder structure and routing

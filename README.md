@@ -1,32 +1,48 @@
 # Shred City
 
-A snappy, offline-first weight training tracking app built for serious lifters who need to log sets in 30 seconds or less.
+Shred City starts as a fast, equipment-aware barbell and plate calculator built for lifters who think in per-side weight. No more mental math between sets—punch in your target, get your plate breakdown instantly.
 
-## 🏋️ Key Features
+## Current Focus (v0.1)
 
-- **Per-side weight tracking** - Track weights the way you actually think (45+25 per side, not total)
-- **Offline-first** - Works perfectly in gym dead zones
-- **Instant logging** - < 10ms writes, no waiting on network
-- **Series organization** - A/B/C markers for main lifts and supersets
-- **Equipment-aware** - Barbell, dumbbell, kettlebell, trap bar, landmine support
+Shipping a genuinely useful plate calculator:
 
-## 🛠 Tech Stack
+- **Barbell plate calculator** — enter target weight, get plate breakdown
+- **Per-side loading logic** — see what goes on each side of the bar
+- **Equipment settings** — configure bar weight, available plates, and units
+- **Local persistence** — your settings survive browser refreshes
+- **Deployed web app** — works on any device, no install required
 
-- **Frontend**: Next.js 14 (App Router), TypeScript, TailwindCSS
-- **Backend**: Supabase (Auth + Postgres)
-- **Local Storage**: IndexedDB + Dexie.js
-- **Deployment**: Vercel
-- **Platform**: PWA (Progressive Web App)
+## Future Direction (Post v0.1)
 
-## 📚 Documentation
+Once the calculator ships, we build the tracker platform:
 
-- **[PLAN.md](./PLAN.md)** - Full project vision, architecture, and decisions
-- **[TODO.md](./TODO.md)** - Development roadmap and task tracking
+- Workout session logging (exercises, sets, reps, weights)
+- Exercise library (strength-focused, equipment-aware)
+- Offline-first architecture with cloud sync
+- Progress tracking and analytics
+- Programs, routines, and periodization
 
-## 🚀 Status
+## Tech Stack
 
-Currently in **Planning Phase** - Ready to start building MVP
+**Current (v0.1):**
 
-## 💪 Philosophy
+- Next.js (App Router) + TypeScript
+- TailwindCSS
+- Client-side state + localStorage
+- Deployment: GitHub → Vercel or Netlify
 
-Built for lifters who value speed over features. No clutter, no fluff - just fast, reliable workout tracking.
+**Future (Post v0.1):**
+
+- Supabase (Auth + Postgres)
+- IndexedDB + Dexie.js (offline storage)
+- TanStack Query (cache management)
+- PWA configuration
+
+## Documentation
+
+- **[PLAN.md](./PLAN.md)** — Architecture, phasing, and decisions
+- **[TODO.md](./TODO.md)** — Active tasks and roadmap
+
+## Philosophy
+
+Built for lifters who value speed over features. Ship small, prove usefulness, grow deliberately.

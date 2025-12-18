@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "sass:math";
 
 // Breakpoint map
@@ -14,11 +15,11 @@ $container-ratio: 0.9;
 
 // Container widths derived from breakpoints
 $container-widths: (
-  sm: math.floor(map-get($breakpoints, sm) * $container-ratio),
-  md: math.floor(map-get($breakpoints, md) * $container-ratio),
-  lg: math.floor(map-get($breakpoints, lg) * $container-ratio),
-  xl: math.floor(map-get($breakpoints, xl) * $container-ratio),
-  xxl: math.floor(map-get($breakpoints, xxl) * $container-ratio),
+  sm: math.floor(map.get($breakpoints, sm) * $container-ratio),
+  md: math.floor(map.get($breakpoints, md) * $container-ratio),
+  lg: math.floor(map.get($breakpoints, lg) * $container-ratio),
+  xl: math.floor(map.get($breakpoints, xl) * $container-ratio),
+  xxl: math.floor(map.get($breakpoints, xxl) * $container-ratio),
 );
 
 $plate-colours: (

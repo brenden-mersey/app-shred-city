@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "../variables" as *;
 @use "../mixins/breakpoints" as *;
 
@@ -9,31 +10,31 @@
 
 @include bp-min-width(sm) {
   .container {
-    max-width: map-get($container-widths, sm);
+    max-width: map.get($container-widths, sm);
     padding: 0;
   }
 }
 
 @include bp-min-width(md) {
   .container {
-    max-width: map-get($container-widths, md);
+    max-width: map.get($container-widths, md);
   }
 }
 
 @include bp-min-width(lg) {
   .container {
-    max-width: map-get($container-widths, lg);
+    max-width: map.get($container-widths, lg);
   }
 }
 
 @include bp-min-width(xl) {
   .container {
-    max-width: map-get($container-widths, xl);
+    max-width: map.get($container-widths, xl);
   }
 }
 
 @include bp-min-width(xxl) {
   .container {
-    max-width: map-get($container-widths, xxl);
+    max-width: map.get($container-widths, xxl);
   }
 }

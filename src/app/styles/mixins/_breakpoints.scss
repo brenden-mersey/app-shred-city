@@ -1,8 +1,9 @@
+@use "sass:map";
 @use "../variables" as *;
 
 // Min-width mixin (mobile-first)
 @mixin bp-min-width($key) {
-  @media (min-width: map-get($breakpoints, $key)) {
+  @media (min-width: map.get($breakpoints, $key)) {
     @content;
   }
 }

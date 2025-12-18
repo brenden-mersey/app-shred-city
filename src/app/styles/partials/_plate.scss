@@ -1,0 +1,102 @@
+@use "sass:color";
+@use "../variables" as *;
+
+.plate {
+  background-color: var(--background);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  position: relative;
+  @each $colour, $value in $plate-colours {
+    &--#{$colour} {
+      .plate__button-add {
+        background-color: color.adjust($value, $lightness: -15%);
+      }
+      .plate__button-add-circle-big {
+        background-color: color.adjust($value, $lightness: -20%);
+      }
+      .plate__button-add-circle-small {
+        background-color: color.adjust($value, $lightness: -12.5%);
+      }
+    }
+  }
+  &__content {
+    position: relative;
+    z-index: 50;
+  }
+}
+
+.plate__button {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.plate__button-add {
+  border-radius: 50%;
+  width: 80%;
+  height: 80%;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--background);
+  &:hover {
+    border-color: white;
+  }
+}
+
+.plate__button-remove {
+  width: 20%;
+  height: 20%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.plate__button-add-content {
+  position: relative;
+  z-index: 50;
+  font-size: 2vw;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5% 0;
+}
+
+.plate__button-add-circle-big {
+  position: absolute;
+  width: 87.5%;
+  height: 87.5%;
+  border-radius: 50%;
+  z-index: 5;
+}
+
+.plate__button-add-circle-small {
+  position: absolute;
+  width: 52.5%;
+  height: 52.5%;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+.plate__button-add-circle-hole {
+  background-color: var(--background);
+  position: absolute;
+  width: 15%;
+  height: 15%;
+  border-radius: 50%;
+  z-index: 15;
+}

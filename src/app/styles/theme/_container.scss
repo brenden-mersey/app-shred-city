@@ -1,0 +1,39 @@
+@use "../variables" as *;
+@use "../mixins/breakpoints" as *;
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+@include bp-min-width(sm) {
+  .container {
+    max-width: map-get($container-widths, sm);
+    padding: 0;
+  }
+}
+
+@include bp-min-width(md) {
+  .container {
+    max-width: map-get($container-widths, md);
+  }
+}
+
+@include bp-min-width(lg) {
+  .container {
+    max-width: map-get($container-widths, lg);
+  }
+}
+
+@include bp-min-width(xl) {
+  .container {
+    max-width: map-get($container-widths, xl);
+  }
+}
+
+@include bp-min-width(xxl) {
+  .container {
+    max-width: map-get($container-widths, xxl);
+  }
+}

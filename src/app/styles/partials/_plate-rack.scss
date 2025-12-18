@@ -1,0 +1,11 @@
+@use "../variables" as *;
+@use "../mixins/breakpoints" as *;
+
+.plate-rack {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  border: 1px solid white;
+  background: white;
+  overflow: hidden;
+}

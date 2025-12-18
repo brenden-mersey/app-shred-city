@@ -1,0 +1,33 @@
+@use "sass:math";
+
+// Breakpoint map
+$breakpoints: (
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+);
+
+// Container width ratio
+$container-ratio: 0.9;
+
+// Container widths derived from breakpoints
+$container-widths: (
+  sm: math.floor(map-get($breakpoints, sm) * $container-ratio),
+  md: math.floor(map-get($breakpoints, md) * $container-ratio),
+  lg: math.floor(map-get($breakpoints, lg) * $container-ratio),
+  xl: math.floor(map-get($breakpoints, xl) * $container-ratio),
+  xxl: math.floor(map-get($breakpoints, xxl) * $container-ratio),
+);
+
+$plate-colours: (
+  red: #e06b6b,
+  blue: #6fa8dc,
+  yellow: #e8d27a,
+  green: #7fbf9b,
+  black: #414141,
+  off-white: #e6e6e3,
+);
+
+@debug $container-widths;

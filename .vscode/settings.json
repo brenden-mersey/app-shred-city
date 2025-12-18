@@ -1,0 +1,20 @@
+{
+  // Delay before autocomplete suggestions appear (in ms)
+  // Default is 10ms — higher = more time to type before suggestions
+  "editor.quickSuggestionsDelay": 800,
+
+  // Require explicit trigger (Ctrl+Space) instead of auto-popup
+  // Set to false if you want to fully control when suggestions appear
+  "editor.quickSuggestions": {
+    "other": "on",
+    "comments": "off",
+    "strings": "off"
+  },
+
+  // Don't auto-accept on typing certain characters
+  "editor.acceptSuggestionOnCommitCharacter": false,
+
+  // Require Tab or Enter to accept (not just typing)
+  "editor.acceptSuggestionOnEnter": "on"
+}
+

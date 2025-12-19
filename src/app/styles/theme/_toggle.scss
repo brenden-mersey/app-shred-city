@@ -1,0 +1,95 @@
+@use "../variables" as *;
+
+.toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  justify-content: space-between;
+  font-size: 0.8rem;
+}
+
+.toggle input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+
+  // When checked, move the slider
+  &:checked + .toggle__slider {
+    background-color: var(--highlight-green);
+    &::before {
+      transform: translateX(calc(3.5rem - 1.5rem - 0.5rem)) translateY(-50%); // Move slider to the right
+    }
+  }
+
+  // Focus state for accessibility
+  &:focus + .toggle__slider {
+    outline: 2px solid var(--highlight-blue);
+    outline-offset: 2px;
+  }
+
+  // Disabled state
+  &:disabled + .toggle__slider {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.toggle__slider {
+  position: relative;
+  display: inline-block;
+  width: 3rem; // Toggle track width
+  height: $toggle-height; // Toggle track height
+  background-color: var(--dark-primary);
+  border-radius: 9999px;
+  transition: background-color 0.3s ease;
+
+  // The sliding circle
+  &::before {
+    content: "";
+    position: absolute;
+    height: $toggle-height * 0.9;
+    width: $toggle-height * 0.9;
+    left: 0.15rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--light-primary);
+    border-radius: 50%;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+}
+
+// Size variants
+.toggle--small {
+  .toggle__slider {
+    width: 2.5rem;
+    height: 1.5rem;
+
+    &::before {
+      height: 1rem;
+      width: 1rem;
+    }
+  }
+
+  input[type="checkbox"]:checked + .toggle__slider::before {
+    transform: translateX(calc(2.5rem - 1rem - 0.5rem)) translateY(-50%);
+  }
+}
+
+.toggle--large {
+  .toggle__slider {
+    width: 4.5rem;
+    height: 2.5rem;
+
+    &::before {
+      height: 2rem;
+      width: 2rem;
+    }
+  }
+
+  input[type="checkbox"]:checked + .toggle__slider::before {
+    transform: translateX(calc(4.5rem - 2rem - 0.5rem)) translateY(-50%);
+  }
+}

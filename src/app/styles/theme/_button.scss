@@ -1,3 +1,6 @@
+@use "../variables" as *;
+@use "../extensions/rounded-corners" as *;
+
 .button {
   cursor: pointer;
   transition: all 0.3s ease;
@@ -6,4 +9,38 @@
   outline: none;
   margin: 0;
   padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  background: transparent;
+}
+
+.button--pill {
+  @extend %rounded-pill;
+  border: 1px solid currentColor;
+  color: inherit;
+  height: $button-height;
+}
+
+.button--pill-minus,
+.button--pill-plus {
+  @extend %rounded-circle;
+  width: $button-height * 0.9;
+  height: $button-height * 0.9;
+  border: 1px solid currentColor;
+  color: inherit;
+  &[disabled] {
+    opacity: 0.33;
+    cursor: not-allowed;
+  }
+}
+
+.button--danger {
+  color: var(--highlight-pink);
+  &:hover,
+  &:focus {
+    background: var(--highlight-pink);
+    color: var(--dark-primary);
+  }
 }

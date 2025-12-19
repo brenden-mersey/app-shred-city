@@ -1,0 +1,27 @@
+%rounded {
+  border-radius: 12px;
+}
+
+%rounded-sm {
+  border-radius: 6px;
+}
+
+%rounded-lg {
+  border-radius: 20px;
+}
+
+%rounded-xl {
+  border-radius: 28px;
+}
+
+%rounded-circle {
+  border-radius: 50%;
+}
+
+%rounded-pill {
+  border-radius: 9999px;
+}
+
+%rounded-none {
+  border-radius: 0;
+}

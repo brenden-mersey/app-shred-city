@@ -3,6 +3,7 @@
 import { PLATE_WEIGHTS } from "../constants/plates";
 import { useCalculator } from "../contexts/CalculatorContext";
 import Plate from "./Plate";
+import Toggle from "./Toggle";
 
 export default function Calculator() {
   const {
@@ -13,6 +14,8 @@ export default function Calculator() {
     loadedPlates,
     removePlate,
     clearPlates,
+    includeBarWeight,
+    setIncludeBarWeight,
   } = useCalculator();
 
   const weightPerSide = loadedPlates.reduce(
@@ -20,19 +23,16 @@ export default function Calculator() {
     0
   );
   const weightWithoutBar = weightPerSide * (isDoubled ? 2 : 1);
-  const totalWeight = weightWithoutBar + barWeight;
+  const totalWeight =
+    weightWithoutBar + (includeBarWeight ? barWeight * (isDoubled ? 2 : 1) : 0);
 
   return (
     <div className="calculator">
-      <h2>Calculator</h2>
-      <h3>Total Weight: {totalWeight} lbs</h3>
-      <p>Enter your target weight and get the plate breakdown.</p>
-      <button
-        className="calculator__button button button--primary"
-        onClick={() => setIsDoubled(!isDoubled)}
-      >
-        <span>{isDoubled ? "Both Sides" : "Single Side"}</span>
-      </button>
+      <div className="calculator__total-weight">
+        <span className="calculator__total-weight-value">{totalWeight}</span>
+        <span className="calculator__total-weight-unit">lbs</span>
+      </div>
+
       <div className="calculator__plate-rack plate-rack">
         {PLATE_WEIGHTS.map((weight) => {
           const loaded = loadedPlates.find((p) => p.weight === weight);
@@ -48,8 +48,22 @@ export default function Calculator() {
           );
         })}
       </div>
+
+      <div className="calculator__toggles">
+        <Toggle
+          isEnabled={isDoubled}
+          setIsEnabled={setIsDoubled}
+          label="Total Weight (Both Sides)"
+        />
+        <Toggle
+          isEnabled={includeBarWeight}
+          setIsEnabled={setIncludeBarWeight}
+          label="Include Bar Weight (45lbs)"
+        />
+      </div>
+
       <button
-        className="calculator__button button button--primary"
+        className="calculator__button-clear button button--pill button--danger"
         onClick={clearPlates}
       >
         Clear Plates

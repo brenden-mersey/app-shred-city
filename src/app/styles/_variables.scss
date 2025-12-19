@@ -10,6 +10,11 @@ $breakpoints: (
   xxl: 1400px,
 );
 
+// Button height
+$button-height: 2.25rem;
+
+$toggle-height: 1.5rem;
+
 // Container width ratio
 $container-ratio: 0.9;
 
@@ -22,6 +27,17 @@ $container-widths: (
   xxl: math.floor(map.get($breakpoints, xxl) * $container-ratio),
 );
 
+$theme-colours: (
+  dark-primary: #171717,
+  dark-secondary: #202020,
+  light-primary: #ffffff,
+  light-secondary: #f0f0f0,
+  highlight-green: #c8ef7a,
+  highlight-blue: #56cbf9,
+  highlight-orange: #f3a738,
+  highlight-pink: #ff729f,
+);
+
 $plate-colours: (
   red: #e06b6b,
   blue: #6fa8dc,
@@ -30,5 +46,3 @@ $plate-colours: (
   black: #414141,
   off-white: #e6e6e3,
 );
-
-@debug $container-widths;

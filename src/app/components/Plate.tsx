@@ -14,22 +14,32 @@ export default function Plate({ weight, count, onAdd, onRemove }: PlateProps) {
   return (
     <div className="plate">
       <button
-        className="plate__button button"
+        className="plate__button-add button"
         onClick={onAdd}
         data-weight={weight}
         data-colour={plateColour}
       >
-        <div className="plate__weight-marker">
-          <span className="plate__weight">{weight}</span>
-          <span className="plate__unit">LB</span>
+        <div className="plate__content">
+          <div className="plate__weight-marker">
+            <span className="plate__weight">{weight}</span>
+            <span className="plate__unit">LB</span>
+          </div>
         </div>
       </button>
 
-      {count > 0 && <span className="plate__count">×{count}</span>}
-
       <div className="plate__controls">
-        <button onClick={onAdd}>+</button>
-        <button onClick={onRemove} disabled={count === 0}>
+        <button
+          className="plate__control-button button button--pill-plus"
+          onClick={onAdd}
+        >
+          +
+        </button>
+        {count > 0 && <span className="plate__count">×{count}</span>}
+        <button
+          className="plate__control-button button button--pill-minus"
+          onClick={onRemove}
+          disabled={count === 0}
+        >
           -
         </button>
       </div>

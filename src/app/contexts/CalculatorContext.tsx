@@ -12,6 +12,10 @@ type CalculatorContextType = {
   isDoubled: boolean;
   setIsDoubled: (isDoubled: boolean) => void;
 
+  // Toggle
+  includeBarWeight: boolean;
+  setIncludeBarWeight: (includeBarWeight: boolean) => void;
+
   // Bar
   barWeight: number;
   setBarWeight: (barWeight: number) => void;
@@ -23,15 +27,25 @@ type CalculatorContextType = {
   clearPlates: () => void;
 };
 
-const CalculatorContext = createContext<CalculatorContextType | undefined>(undefined);
+const CalculatorContext = createContext<CalculatorContextType | undefined>(
+  undefined
+);
 
-const findExistingPlateObject = (platesArray: LoadedPlate[], weight: number) => {
+const findExistingPlateObject = (
+  platesArray: LoadedPlate[],
+  weight: number
+) => {
   return platesArray.find((plate) => plate.weight === weight) ?? null;
 };
 
-export function CalculatorProvider({ children }: { children: React.ReactNode }) {
+export function CalculatorProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   // States
-  const [isDoubled, setIsDoubled] = useState(true);
+  const [isDoubled, setIsDoubled] = useState(false);
+  const [includeBarWeight, setIncludeBarWeight] = useState(false);
   const [barWeight, setBarWeight] = useState(45);
   const [loadedPlates, setLoadedPlates] = useState<LoadedPlate[]>([]);
 
@@ -41,7 +55,9 @@ export function CalculatorProvider({ children }: { children: React.ReactNode }) 
     setLoadedPlates((platesArray) => {
       const existingPlate = findExistingPlateObject(platesArray, weight);
       if (existingPlate) {
-        return platesArray.map((plate) => (plate.weight === weight ? { ...plate, count: plate.count + 1 } : plate));
+        return platesArray.map((plate) =>
+          plate.weight === weight ? { ...plate, count: plate.count + 1 } : plate
+        );
       } else {
         return [...platesArray, { weight, count: 1 }];
       }
@@ -59,7 +75,9 @@ export function CalculatorProvider({ children }: { children: React.ReactNode }) 
         return platesArray.filter((p) => p.weight !== weight);
       } else {
         // Decrement count
-        return platesArray.map((p) => (p.weight === weight ? { ...p, count: p.count - 1 } : p));
+        return platesArray.map((p) =>
+          p.weight === weight ? { ...p, count: p.count - 1 } : p
+        );
       }
     });
   };
@@ -79,9 +97,15 @@ export function CalculatorProvider({ children }: { children: React.ReactNode }) 
     addPlate,
     removePlate,
     clearPlates,
+    includeBarWeight,
+    setIncludeBarWeight,
   };
 
-  return <CalculatorContext.Provider value={contextValue}>{children}</CalculatorContext.Provider>;
+  return (
+    <CalculatorContext.Provider value={contextValue}>
+      {children}
+    </CalculatorContext.Provider>
+  );
 }
 
 export function useCalculator() {

@@ -1,0 +1,8 @@
+@use "../extensions/padding" as *;
+
+.footer {
+  @extend %padding-xl;
+  font-size: 0.6rem;
+  text-align: center;
+  padding: 1rem 0;
+}

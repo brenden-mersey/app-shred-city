@@ -23,8 +23,7 @@ export default function Calculator() {
     0
   );
   const weightWithoutBar = weightPerSide * (isDoubled ? 2 : 1);
-  const totalWeight =
-    weightWithoutBar + (includeBarWeight ? barWeight * (isDoubled ? 2 : 1) : 0);
+  const totalWeight = weightWithoutBar + (includeBarWeight ? barWeight : 0);
 
   return (
     <div className="calculator">

@@ -33,7 +33,7 @@ $plate-size-small: 80%;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  font-size: 4.75vw;
+  font-size: 18px;
   font-weight: 900;
   line-height: 1;
   &::after,
@@ -59,13 +59,23 @@ $plate-size-small: 80%;
     max-height: $plate-size-small;
     font-size: 80%;
   }
+  &[data-weight="1.25"],
+  &[data-weight="2.5"] {
+    .plate__weight-marker {
+      flex-flow: column;
+    }
+    .plate__unit {
+      font-size: 80%;
+    }
+  }
   @each $name, $value in $plate-colours {
     &[data-colour="#{$name}"] {
+      background: color.adjust($value, $alpha: -0.9);
       &::after {
-        border-color: color.adjust($value, $alpha: -0.5);
+        border-color: color.adjust($value, $alpha: -0.8);
       }
       &::before {
-        border-color: color.adjust($value, $alpha: -0.25);
+        border-color: color.adjust($value, $alpha: -0.5);
       }
     }
   }
@@ -93,7 +103,9 @@ $plate-size-small: 80%;
 }
 
 .plate__count {
-  font-size: 2.25vw;
+  background: var(--dark-primary);
+  padding: 0.25rem 0.5rem;
+  font-size: 12px;
   font-weight: 900;
   color: inherit;
 }

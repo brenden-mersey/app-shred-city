@@ -14,6 +14,7 @@
   justify-content: center;
   line-height: 1;
   background: transparent;
+  font-size: 12px;
 }
 
 .button--pill {
@@ -37,10 +38,10 @@
 }
 
 .button--danger {
-  color: var(--highlight-pink);
+  color: var(--light-primary);
   &:hover,
   &:focus {
-    background: var(--highlight-pink);
+    background: var(--light-primary);
     color: var(--dark-primary);
   }
 }

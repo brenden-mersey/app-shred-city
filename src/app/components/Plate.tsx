@@ -34,7 +34,7 @@ export default function Plate({ weight, count, onAdd, onRemove }: PlateProps) {
         >
           +
         </button>
-        {count > 0 && <span className="plate__count">×{count}</span>}
+        <span className="plate__count">{count}</span>
         <button
           className="plate__control-button button button--pill-minus"
           onClick={onRemove}

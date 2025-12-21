@@ -1,0 +1,52 @@
+@use "../extensions/animations" as *;
+@use "../extensions/padding" as *;
+
+.drawer {
+  @extend %animation-drawer;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 300px;
+  max-width: 85vw;
+  background: var(--dark-secondary);
+  z-index: 9999;
+  transform: translateX(100%);
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+
+  &__content {
+    @extend %padding;
+    height: 100%;
+    overflow-y: auto;
+    &-welcome {
+      color: var(--dark-primary);
+      font-weight: 700;
+      font-style: italic;
+      display: block;
+      font-size: 14px;
+      padding-bottom: 12px;
+    }
+  }
+
+  &__nav {
+    border-top: 1px solid var(--dark-primary);
+    border-bottom: 1px solid var(--dark-primary);
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    &-item {
+      padding: 12px 0;
+      & + .drawer__nav-item {
+        border-top: 1px solid var(--dark-primary);
+      }
+    }
+  }
+
+  &--open {
+    transform: translateX(0);
+  }
+
+  &--closed {
+    transform: translateX(100%);
+  }
+}

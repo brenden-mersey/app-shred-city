@@ -103,9 +103,9 @@ export default function RootLayout({
         <CalculatorProvider>
           <DrawerProvider>
             <Header />
-            <Drawer />
             {children}
             <Footer />
+            <Drawer />
           </DrawerProvider>
         </CalculatorProvider>
       </body>

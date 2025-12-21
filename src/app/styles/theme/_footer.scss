@@ -1,8 +1,11 @@
+@use "../extensions/animations" as *;
 @use "../extensions/padding" as *;
 
 .footer {
+  @extend %animation-drawer;
   @extend %padding-xl;
   font-size: 0.6rem;
   text-align: center;
   padding: 1rem 0;
+  flex-shrink: 0;
 }

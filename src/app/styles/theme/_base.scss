@@ -44,17 +44,16 @@ body {
   }
 }
 
-footer {
-  flex-shrink: 0;
-}
-
-main {
-  flex: 1 0 auto;
-  padding: 2rem 0;
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr;
-  row-gap: 1rem;
+// Push content when drawer is open
+body.drawer-open {
+  header,
+  main,
+  footer {
+    transform: translateX(-300px);
+    @media (max-width: 375px) {
+      transform: translateX(-85vw);
+    }
+  }
 }
 
 * {

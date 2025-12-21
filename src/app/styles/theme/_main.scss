@@ -1,0 +1,11 @@
+@use "../extensions/animations" as *;
+
+.main {
+  @extend %animation-drawer;
+  flex: 1 0 auto;
+  padding: 4rem 0;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 1rem;
+}

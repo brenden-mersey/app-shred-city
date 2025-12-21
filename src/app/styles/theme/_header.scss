@@ -1,6 +1,8 @@
+@use "../extensions/animations" as *;
 @use "../extensions/padding" as *;
 
 .header {
+  @extend %animation-drawer;
   background: var(--dark-primary);
   color: var(--light-primary);
   border-bottom: 1px solid var(--dark-secondary);

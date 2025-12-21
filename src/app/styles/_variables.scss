@@ -27,6 +27,15 @@ $container-widths: (
   xxl: math.floor(map.get($breakpoints, xxl) * $container-ratio),
 );
 
+// Container grid columns derived from breakpoints
+$container-grid-columns: (
+  sm: 6,
+  md: 9,
+  lg: 12,
+  xl: 12,
+  xxl: 12,
+);
+
 $theme-colours: (
   dark-primary: #171717,
   dark-secondary: #202020,

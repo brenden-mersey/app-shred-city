@@ -29,18 +29,18 @@ export default function Plate({ weight, count, onAdd, onRemove }: PlateProps) {
 
       <div className="plate__controls">
         <button
-          className="plate__control-button button button--pill-plus"
-          onClick={onAdd}
-        >
-          +
-        </button>
-        <span className="plate__count">{count}</span>
-        <button
           className="plate__control-button button button--pill-minus"
           onClick={onRemove}
           disabled={count === 0}
         >
           -
+        </button>
+        <span className="plate__count">{count}</span>
+        <button
+          className="plate__control-button button button--pill-plus"
+          onClick={onAdd}
+        >
+          +
         </button>
       </div>
     </div>

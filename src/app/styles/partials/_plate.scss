@@ -77,6 +77,9 @@ $plate-size-small: 80%;
       &::before {
         border-color: color.adjust($value, $alpha: -0.5);
       }
+      &:hover {
+        background: color.adjust($value, $alpha: -0.8);
+      }
     }
   }
 }

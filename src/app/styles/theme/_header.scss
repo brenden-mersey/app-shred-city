@@ -16,6 +16,12 @@
   &__button-burger,
   &__button-calculator {
     color: currentColor;
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      fill: currentColor;
+    }
   }
 
   &__button-burger {

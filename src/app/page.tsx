@@ -29,6 +29,17 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <section className="section">
+        <div className="container">
+          <a
+            href="/workouts"
+            className="button button--start-workout button--primary"
+          >
+            <span className="button__icon">+</span>
+            <span className="button__text">Start a New Workout</span>
+          </a>
+        </div>
+      </section>
     </main>
   );
 }

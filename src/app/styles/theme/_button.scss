@@ -17,13 +17,6 @@
   font-size: 12px;
 }
 
-.button--pill {
-  @extend %rounded-pill;
-  border: 1px solid currentColor;
-  color: inherit;
-  height: $button-height;
-}
-
 .button--pill-minus,
 .button--pill-plus {
   @extend %rounded-circle;
@@ -35,6 +28,24 @@
     opacity: 0.33;
     cursor: not-allowed;
   }
+}
+
+.button--pill {
+  @extend %rounded-pill;
+  border: 1px solid currentColor;
+  color: inherit;
+  height: $button-height;
+}
+
+.button--start-workout {
+  @extend %rounded-lg;
+  border: 1px solid currentColor;
+  min-height: 100px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
 }
 
 .button--danger {

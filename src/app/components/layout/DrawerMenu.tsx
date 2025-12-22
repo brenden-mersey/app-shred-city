@@ -7,15 +7,18 @@ type DrawerProps = {
   children?: React.ReactNode;
 };
 
-export default function Drawer({ children }: DrawerProps) {
-  const { isOpen, closeDrawer } = useDrawer();
-  const drawerClasses = `drawer ${isOpen ? "drawer--open" : "drawer--closed"}`;
-  const bodyClasses = "drawer-open";
+export default function DrawerMenu({ children }: DrawerProps) {
+  const { menuIsOpen, closeMenu, closeAllDrawers } = useDrawer();
+  const drawerClass = "drawer-menu";
+  const classes = `${drawerClass} ${
+    menuIsOpen ? `${drawerClass}--open` : `${drawerClass}--closed`
+  }`;
+  const bodyClasses = `${drawerClass}--open`;
 
   // Close on Escape key, manage body scroll/class, and handle clicks on pushed content
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeDrawer();
+      if (e.key === "Escape") closeAllDrawers();
     };
 
     const handleContentClick = (e: MouseEvent) => {
@@ -23,7 +26,7 @@ export default function Drawer({ children }: DrawerProps) {
       // But exclude the burger button and drawer itself
       const target = e.target as HTMLElement;
       const burgerButton = target.closest(".header__button-burger");
-      const drawerElement = target.closest(".drawer");
+      const drawerElement = target.closest(`.${drawerClass}`);
 
       if (
         !burgerButton &&
@@ -32,11 +35,11 @@ export default function Drawer({ children }: DrawerProps) {
           target.closest("main") ||
           target.closest("footer"))
       ) {
-        closeDrawer();
+        closeMenu();
       }
     };
 
-    if (isOpen) {
+    if (menuIsOpen) {
       document.addEventListener("keydown", handleEscape);
       document.addEventListener("click", handleContentClick);
       // Prevent body scroll when open
@@ -51,17 +54,17 @@ export default function Drawer({ children }: DrawerProps) {
       document.body.style.overflow = "";
       document.body.classList.remove(bodyClasses);
     };
-  }, [isOpen, closeDrawer, bodyClasses]);
+  }, [menuIsOpen, closeMenu, closeAllDrawers, bodyClasses]);
 
   return (
-    <aside className={drawerClasses}>
-      <div className="drawer__content">
-        <span className="drawer__content-welcome">John Doe</span>
-        <nav className="drawer__nav">
-          <div className="drawer__nav-item">Workouts</div>
-          <div className="drawer__nav-item">Account</div>
-          <div className="drawer__nav-item">Contact</div>
-          <div className="drawer__nav-item">Logout</div>
+    <aside className={classes}>
+      <div className={`${drawerClass}__content`}>
+        <span className={`${drawerClass}__content-welcome`}>John Doe</span>
+        <nav className={`${drawerClass}__nav`}>
+          <div className={`${drawerClass}__nav-item`}>Workouts</div>
+          <div className={`${drawerClass}__nav-item`}>Account</div>
+          <div className={`${drawerClass}__nav-item`}>Contact</div>
+          <div className={`${drawerClass}__nav-item`}>Logout</div>
         </nav>
       </div>
     </aside>

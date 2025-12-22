@@ -1,0 +1,29 @@
+@use "../extensions/animations" as *;
+@use "../extensions/padding" as *;
+@use "../variables" as *;
+
+.drawer-calculator {
+  @extend %animation-drawer;
+  padding-top: $theme-header-height;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--dark-secondary);
+  z-index: 8888;
+  transform: translateY(-100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &--open {
+    transform: translateY(0);
+  }
+
+  &--closed {
+    transform: translateY(-100%);
+  }
+}

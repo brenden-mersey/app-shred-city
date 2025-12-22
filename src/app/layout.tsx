@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { CalculatorProvider } from "./contexts/CalculatorContext";
 import { DrawerProvider } from "./contexts/DrawerContext";
-import Drawer from "./components/layout/Drawer";
+import DrawerMenu from "./components/layout/DrawerMenu";
+import DrawerCalculator from "./components/layout/DrawerCalculator";
 import Footer from "./components/layout/Footer";
 import Header from "./components/layout/Header";
 import "./styles/main.scss";
@@ -105,7 +106,8 @@ export default function RootLayout({
             <Header />
             {children}
             <Footer />
-            <Drawer />
+            <DrawerMenu />
+            <DrawerCalculator />
           </DrawerProvider>
         </CalculatorProvider>
       </body>

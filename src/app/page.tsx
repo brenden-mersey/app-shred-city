@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Calculator from "./components/Calculator";
 
 export const metadata: Metadata = {
   title: "Barbell Plate Calculator",
@@ -17,7 +16,17 @@ export default function Home() {
     <main className="main">
       <section className="section">
         <div className="container">
-          <Calculator />
+          <h2 className="text text--h2">Welcome to Shred City</h2>
+          <div className="text text--rte">
+            <p>
+              Shred City is a platform for strength trainers to track their
+              progress and improve their lifts.
+            </p>
+            <p>
+              We offer a variety of tools to help you track your progress and
+              improve your lifts.
+            </p>
+          </div>
         </div>
       </section>
     </main>

@@ -7,8 +7,9 @@
   background: var(--dark-secondary);
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  max-width: 400px;
+  gap: 1.15rem;
+  width: 100%;
+  max-width: 380px;
   margin: 0 auto;
   .toggle {
     padding: 0.5rem 0;

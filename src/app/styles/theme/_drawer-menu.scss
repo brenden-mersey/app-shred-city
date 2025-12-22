@@ -1,7 +1,7 @@
 @use "../extensions/animations" as *;
 @use "../extensions/padding" as *;
 
-.drawer {
+.drawer-menu {
   @extend %animation-drawer;
   position: fixed;
   top: 0;

@@ -55,6 +55,14 @@ export default function DrawerCalculator({ children }: DrawerProps) {
 
   return (
     <aside className={classes}>
+      <button
+        className="header__button-calculator button"
+        onClick={closeCalculator}
+        aria-label="Close calculator"
+        aria-expanded={calculatorIsOpen}
+      >
+        Close
+      </button>
       <Calculator />
     </aside>
   );

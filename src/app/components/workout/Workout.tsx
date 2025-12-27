@@ -3,27 +3,29 @@
 import { WorkoutSession } from "@/app/types/workout";
 import Exercise from "@/app/components/Exercise";
 
-type workoutProps = { workoutProps: WorkoutSession };
+type WorkoutProps = {
+  workout: WorkoutSession;
+};
 
-export default function Workout({ workoutProps }: workoutProps) {
+export default function Workout({ workout }: WorkoutProps) {
   return (
     <div className="workout">
       <div className="workout__header">
         <div className="workout__meta">
-          {workoutProps.startTime && (
+          {workout.startTime && (
             <div className="workout__date">
-              {new Date(workoutProps.startTime).toLocaleDateString()}
+              {new Date(workout.startTime).toLocaleDateString()}
             </div>
           )}
         </div>
       </div>
       <div className="workout__body">
-        {workoutProps.exercises.length === 0 ? (
+        {workout.exercises.length === 0 ? (
           <div className="workout__empty text--body text--rte">
             <p>No exercises added yet. Add an exercise to get started.</p>
           </div>
         ) : (
-          workoutProps.exercises.map((exercise) => (
+          workout.exercises.map((exercise) => (
             <Exercise key={exercise.id} exerciseProps={exercise} />
           ))
         )}

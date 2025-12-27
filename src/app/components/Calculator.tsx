@@ -4,6 +4,7 @@ import { PLATE_WEIGHTS } from "../constants/plates";
 import { useCalculator } from "../contexts/CalculatorContext";
 import Plate from "./Plate";
 import Toggle from "./Toggle";
+import Barbell from "./Barbell";
 
 export default function Calculator() {
   const {
@@ -32,6 +33,8 @@ export default function Calculator() {
         <span className="calculator__total-weight-unit">lbs</span>
       </div>
 
+      <Barbell barbellLoadedPlates={loadedPlates} />
+
       <div className="calculator__plate-rack plate-rack">
         {PLATE_WEIGHTS.map((weight) => {
           const loaded = loadedPlates.find((p) => p.weight === weight);
@@ -49,16 +52,20 @@ export default function Calculator() {
       </div>
 
       <div className="calculator__toggles">
-        <Toggle
-          isEnabled={isDoubled}
-          setIsEnabled={setIsDoubled}
-          label="Total Weight (Both Sides)"
-        />
-        <Toggle
-          isEnabled={includeBarWeight}
-          setIsEnabled={setIncludeBarWeight}
-          label="Include Bar Weight (45lbs)"
-        />
+        <div className="calculator__toggles-item">
+          <Toggle
+            isEnabled={isDoubled}
+            setIsEnabled={setIsDoubled}
+            label="Show Total Weight (Both Sides)"
+          />
+        </div>
+        <div className="calculator__toggles-item">
+          <Toggle
+            isEnabled={includeBarWeight}
+            setIsEnabled={setIncludeBarWeight}
+            label="Include Bar Weight (45lbs)"
+          />
+        </div>
       </div>
 
       <button

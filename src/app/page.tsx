@@ -32,7 +32,7 @@ export default function Home() {
       <section className="section">
         <div className="container">
           <a
-            href="/workouts"
+            href="/workouts/new"
             className="button button--start-workout button--primary"
           >
             <span className="button__icon">+</span>

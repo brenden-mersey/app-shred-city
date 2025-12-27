@@ -1,0 +1,46 @@
+@use "sass:color";
+@use "../variables" as *;
+
+.barbell {
+  border-top: 1px solid rgba(255, 255, 255, 0.035);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.035);
+
+  &__bar {
+    width: 100%;
+    height: 20px;
+    background: var(--dark-secondary);
+    border: 1px solid;
+  }
+
+  &__label {
+    display: none;
+  }
+
+  &__plates {
+    height: calc(28px + 1rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    width: 100%;
+  }
+
+  &__plate {
+    border: 1px solid;
+    min-width: 22px;
+    height: 28px;
+    background: var(--dark-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    line-height: 1;
+    padding: 0 0.33rem;
+    @each $name, $value in $plate-colours {
+      &[data-colour="#{$name}"] {
+        background: color.adjust($value, $alpha: -0.9);
+        border-color: color.adjust($value, $alpha: -0.5);
+      }
+    }
+  }
+}

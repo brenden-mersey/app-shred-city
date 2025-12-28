@@ -15,8 +15,6 @@
   transform: translateY(-100%);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
 
   &--open {
     transform: translateY(0);
@@ -24,5 +22,42 @@
 
   &--closed {
     transform: translateY(-100%);
+  }
+
+  &__button-close {
+    color: inherit;
+    display: inline-flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    &-stroke {
+      position: absolute;
+      width: 135%;
+      height: 2px;
+      background: currentColor;
+      transform: rotate(45deg);
+      &:last-child {
+        transform: rotate(-45deg);
+      }
+    }
+  }
+
+  &__header {
+    height: $theme-header-height;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  &__main {
+    display: flex;
+    flex: 1 0 auto;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    padding-top: 500px;
   }
 }

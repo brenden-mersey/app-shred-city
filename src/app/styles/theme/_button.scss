@@ -50,6 +50,8 @@
 
 .button--danger {
   color: var(--light-primary);
+  font-weight: 900;
+  text-transform: uppercase;
   &:hover,
   &:focus {
     background: var(--light-primary);

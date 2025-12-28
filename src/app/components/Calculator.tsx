@@ -72,7 +72,7 @@ export default function Calculator() {
         className="calculator__button-clear button button--pill button--danger"
         onClick={clearPlates}
       >
-        Clear Plates
+        Clear
       </button>
     </div>
   );

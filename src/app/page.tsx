@@ -14,29 +14,25 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className="main">
-      <section className="section">
-        <div className="container">
-          <h2 className="text text--h2">Welcome to Shred City</h2>
-          <div className="text text--rte">
+      <section className="section section--intro intro">
+        <div className="intro__container container container--grid">
+          <h2 className="intro__title text text--h2">Welcome to Shred City</h2>
+          <div className="intro__content text text--rte">
             <p>
               Shred City is a platform for strength trainers to track their
               progress and improve their lifts.
             </p>
             <p>
               We offer a variety of tools to help you track your progress and
-              improve your lifts.
+              improve your lifts. Including one of the fastest and most
+              intuitive plate calculators on the internet.
             </p>
           </div>
-        </div>
-      </section>
-      <section className="section">
-        <div className="container">
           <a
             href="/workouts/new"
-            className="button button--start-workout button--primary"
+            className="intro__button button button--start-workout button--pill button--highlight-green"
           >
-            <span className="button__icon">+</span>
-            <span className="button__text">Start a New Workout</span>
+            <span className="button__text">Start a Workout</span>
           </a>
         </div>
       </section>

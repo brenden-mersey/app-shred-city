@@ -1,9 +1,10 @@
 @use "../extensions/animations" as *;
+@use "../variables" as *;
 
 .main {
   @extend %animation-drawer;
-  flex: 1 0 auto;
-  padding: 4rem 0;
+  padding-top: $theme-header-height;
+  flex: 0 0 auto;
   position: relative;
   display: grid;
   grid-template-columns: 1fr;

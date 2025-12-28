@@ -1,0 +1,11 @@
+.intro {
+  padding: 2rem 0;
+  &__button,
+  &__content,
+  &__title {
+    grid-column: 1 / -1;
+  }
+  &__container {
+    row-gap: 1.5rem;
+  }
+}

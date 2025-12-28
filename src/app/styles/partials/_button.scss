@@ -1,3 +1,4 @@
+@use "sass:color";
 @use "../variables" as *;
 @use "../extensions/rounded-corners" as *;
 
@@ -35,17 +36,29 @@
   border: 1px solid currentColor;
   color: inherit;
   height: $button-height;
+  @each $name, $value in $theme-colours {
+    &.button--#{$name} {
+      background: color.adjust($value, $alpha: -0.95);
+      color: $value;
+      border-color: $value;
+      &:hover,
+      &:focus {
+        background: color.adjust($value, $alpha: -0.85);
+      }
+    }
+  }
 }
 
 .button--start-workout {
   @extend %rounded-lg;
   border: 1px solid currentColor;
-  min-height: 100px;
-  width: 100%;
+  min-width: 200px;
   justify-content: center;
   align-items: center;
   text-align: center;
   gap: 0.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
 }
 
 .button--danger {

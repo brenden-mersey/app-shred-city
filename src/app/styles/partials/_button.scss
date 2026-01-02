@@ -31,11 +31,37 @@
   }
 }
 
+.button--close {
+  color: inherit;
+  display: inline-flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  .button__stroke {
+    position: absolute;
+    width: 115%;
+    height: 2px;
+    background: currentColor;
+    transform: rotate(45deg);
+    &:last-child {
+      transform: rotate(-45deg);
+    }
+  }
+}
+
 .button--pill {
   @extend %rounded-pill;
-  border: 1px solid currentColor;
-  color: inherit;
   height: $button-height;
+  border: 2px solid currentColor;
+  color: inherit;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.025rem;
+  width: 100%;
+  min-width: 200px;
+  max-width: 300px;
+  justify-content: center;
+
   @each $name, $value in $theme-colours {
     &.button--#{$name} {
       background: color.adjust($value, $alpha: -0.95);
@@ -49,16 +75,13 @@
   }
 }
 
+.button--add-set,
 .button--start-workout {
   @extend %rounded-lg;
-  border: 1px solid currentColor;
-  min-width: 200px;
-  justify-content: center;
   align-items: center;
   text-align: center;
   gap: 0.5rem;
-  font-weight: 900;
-  text-transform: uppercase;
+  margin: 0 auto;
 }
 
 .button--danger {

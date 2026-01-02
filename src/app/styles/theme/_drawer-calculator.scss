@@ -25,23 +25,8 @@
   }
 
   &__button-close {
-    color: inherit;
-    display: inline-flex;
-    flex-flow: column;
-    align-items: center;
-    justify-content: center;
     width: 20px;
     height: 20px;
-    &-stroke {
-      position: absolute;
-      width: 115%;
-      height: 2px;
-      background: currentColor;
-      transform: rotate(45deg);
-      &:last-child {
-        transform: rotate(-45deg);
-      }
-    }
   }
 
   &__header {

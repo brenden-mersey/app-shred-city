@@ -12,15 +12,16 @@ export default function ButtonClose(props: ButtonCloseProps) {
     classes = "",
     handleClick = () => {},
   } = props;
-  const buttonClass = `${blockName}__button-close button ${classes}`;
+  const buttonClass =
+    `${blockName}__button-close button button--close ${classes}`.trim();
   return (
     <button
       className={buttonClass}
       onClick={handleClick}
       aria-label={ariaLabel}
     >
-      <span className={`${buttonClass}__stroke`}></span>
-      <span className={`${buttonClass}__stroke`}></span>
+      <span className={`${blockName}__button-stroke button__stroke`}></span>
+      <span className={`${blockName}__button-stroke button__stroke`}></span>
     </button>
   );
 }

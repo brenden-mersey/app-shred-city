@@ -24,18 +24,51 @@ export default function Workout() {
         </div>
       </div>
       <div className="workout__body">
-        <AddExercise />
         {workout.exercises.length === 0 ? (
           <div className="workout__empty text--body text--rte">
             <p>No exercises added yet. Add an exercise to get started.</p>
           </div>
         ) : (
           <div className="workout__exercises">
-            {workout.exercises.map((exercise) => (
-              <Exercise key={exercise.id} exerciseProps={exercise} />
-            ))}
+            {(["A", "B", "C", "D", "E"] as const).map((series) => {
+              const exercisesInSeries = workout.exercises.filter(
+                (ex) => ex.series === series
+              );
+
+              if (exercisesInSeries.length === 0) return null;
+
+              return (
+                <div
+                  key={series}
+                  className="workout__series"
+                  data-series={series.toLowerCase()}
+                >
+                  <div className="workout__series-header">
+                    <h2 className="workout__series-title text text--h3">
+                      <span className="workout__series-title-letter">
+                        {series}
+                      </span>
+                      <span className="workout__series-title-letter-separator">
+                        /
+                      </span>
+                      <span className="workout__series-title-letter-separator">
+                        Series
+                      </span>
+                    </h2>
+                  </div>
+                  <div className="workout__series-exercises">
+                    {exercisesInSeries.map((exercise) => (
+                      <Exercise key={exercise.id} exerciseProps={exercise} />
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         )}
+      </div>
+      <div className="workout__footer">
+        <AddExercise />
       </div>
     </div>
   );

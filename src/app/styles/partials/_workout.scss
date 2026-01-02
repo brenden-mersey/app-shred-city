@@ -1,5 +1,94 @@
-.workout__exercises {
+@use "sass:map";
+@use "../variables" as *;
+@use "../extensions/button-themes" as *;
+@use "../extensions/padding" as *;
+@use "../extensions/rounded-corners" as *;
+
+.workout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
+  row-gap: 2rem;
+
+  .add-exercise {
+    @extend %padding-md;
+    @extend %rounded-md;
+    background-color: var(--dark-secondary);
+    display: flex;
+    flex-flow: column;
+    gap: 1rem;
+  }
+
+  &__exercises,
+  &__series-exercises {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  &__exercises {
+    gap: 3rem;
+  }
+
+  &__series-header {
+    margin-bottom: 1.5rem;
+  }
+
+  &__series-exercises {
+    gap: 1.5rem;
+  }
+
+  [data-series="a"] {
+    .exercise__button-add-set {
+      @extend %button-theme-hightlight-green;
+    }
+    .set__count-value {
+      color: map.get($theme-colours, "highlight-green");
+    }
+    .workout__series-title-letter {
+      color: map.get($theme-colours, "highlight-green");
+    }
+  }
+  [data-series="b"] {
+    .exercise__button-add-set {
+      @extend %button-theme-hightlight-blue;
+    }
+    .set__count-value {
+      color: map.get($theme-colours, "highlight-blue");
+    }
+    .workout__series-title-letter {
+      color: map.get($theme-colours, "highlight-blue");
+    }
+  }
+  [data-series="c"] {
+    .exercise__button-add-set {
+      @extend %button-theme-hightlight-orange;
+    }
+    .set__count-value {
+      color: map.get($theme-colours, "highlight-orange");
+    }
+    .workout__series-title-letter {
+      color: map.get($theme-colours, "highlight-orange");
+    }
+  }
+  [data-series="d"] {
+    .exercise__button-add-set {
+      @extend %button-theme-hightlight-pink;
+    }
+    .set__count-value {
+      color: map.get($theme-colours, "highlight-pink");
+    }
+    .workout__series-title-letter {
+      color: map.get($theme-colours, "highlight-pink");
+    }
+  }
+  [data-series="e"] {
+    .exercise__button-add-set {
+      @extend %button-theme-hightlight-purple;
+    }
+    .set__count-value {
+      color: map.get($theme-colours, "highlight-purple");
+    }
+    .workout__series-title-letter {
+      color: map.get($theme-colours, "highlight-purple");
+    }
+  }
 }

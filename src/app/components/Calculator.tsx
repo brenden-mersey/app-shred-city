@@ -67,14 +67,14 @@ export default function Calculator() {
           <Toggle
             isEnabled={isDoubled}
             setIsEnabled={setIsDoubled}
-            label="Show Total Weight (Both Sides)"
+            label="Total Weight (Both Sides)"
           />
         </div>
         <div className="calculator__toggles-item">
           <Toggle
             isEnabled={includeBarWeight}
             setIsEnabled={setIncludeBarWeight}
-            label="Include Bar Weight (45lbs)"
+            label="Bar Weight (45lbs)"
           />
         </div>
       </div>

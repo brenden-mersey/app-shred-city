@@ -1,0 +1,69 @@
+@use "sass:map";
+@use "sass:color";
+@use "../variables" as *;
+
+%button-theme-hightlight-green {
+  $colour: map.get($theme-colours, "highlight-green");
+  background: color.adjust($colour, $alpha: -0.95);
+  color: $colour;
+  border-color: $colour;
+  &:hover,
+  &:focus {
+    background: color.adjust($colour, $alpha: -0.85);
+  }
+}
+
+%button-theme-hightlight-blue {
+  $colour: map.get($theme-colours, "highlight-blue");
+  background: color.adjust($colour, $alpha: -0.95);
+  color: $colour;
+  border-color: $colour;
+  &:hover,
+  &:focus {
+    background: color.adjust($colour, $alpha: -0.85);
+  }
+}
+
+%button-theme-hightlight-orange {
+  $colour: map.get($theme-colours, "highlight-orange");
+  background: color.adjust($colour, $alpha: -0.95);
+  color: $colour;
+  border-color: $colour;
+  &:hover,
+  &:focus {
+    background: color.adjust($colour, $alpha: -0.85);
+  }
+}
+
+%button-theme-hightlight-pink {
+  $colour: map.get($theme-colours, "highlight-pink");
+  background: color.adjust($colour, $alpha: -0.95);
+  color: $colour;
+  border-color: $colour;
+  &:hover,
+  &:focus {
+    background: color.adjust($colour, $alpha: -0.85);
+  }
+}
+
+%button-theme-hightlight-yellow {
+  $colour: map.get($theme-colours, "highlight-yellow");
+  background: color.adjust($colour, $alpha: -0.95);
+  color: $colour;
+  border-color: $colour;
+  &:hover,
+  &:focus {
+    background: color.adjust($colour, $alpha: -0.85);
+  }
+}
+
+%button-theme-hightlight-purple {
+  $colour: map.get($theme-colours, "highlight-purple");
+  background: color.adjust($colour, $alpha: -0.95);
+  color: $colour;
+  border-color: $colour;
+  &:hover,
+  &:focus {
+    background: color.adjust($colour, $alpha: -0.85);
+  }
+}

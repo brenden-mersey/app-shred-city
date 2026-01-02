@@ -105,18 +105,28 @@ export default function Set({ set, index, exerciseId }: SetProps) {
 
   const handleWeightPerSideChange = (value: number) => {
     setWeightPerSide(value);
-    // Calculate total weight from weight per side
-    const calculatedTotalWeight = calculateTotalWeight(
-      value,
-      set.equipmentType
-    );
-    setTotalWeight(calculatedTotalWeight);
 
-    // Update the set in context
-    updateSet(exerciseId, set.id, {
-      weightPerSide: value,
-      totalWeight: calculatedTotalWeight,
-    });
+    // Only calculate total weight for barbell/trap-bar (where it's meaningful)
+    if (showWeightPerSide) {
+      const calculatedTotalWeight = calculateTotalWeight(
+        value,
+        set.equipmentType
+      );
+      setTotalWeight(calculatedTotalWeight);
+
+      // Update the set in context
+      updateSet(exerciseId, set.id, {
+        weightPerSide: value,
+        totalWeight: calculatedTotalWeight,
+      });
+    } else {
+      // For non-barbell exercises, weightPerSide IS the weight (no total needed)
+      // Still update totalWeight for data consistency, but it equals weightPerSide
+      updateSet(exerciseId, set.id, {
+        weightPerSide: value,
+        totalWeight: value, // For non-barbell, totalWeight = weightPerSide
+      });
+    }
   };
 
   const handleRepsChange = (value: number) => {
@@ -161,10 +171,16 @@ export default function Set({ set, index, exerciseId }: SetProps) {
             type="number"
             min={0}
             step={0.5}
-            value={totalWeight || ""}
-            onChange={(e) =>
-              handleTotalWeightChange(parseFloat(e.target.value) || 0)
-            }
+            value={showWeightPerSide ? totalWeight || "" : weightPerSide || ""}
+            onChange={(e) => {
+              const value = parseFloat(e.target.value) || 0;
+              if (showWeightPerSide) {
+                handleTotalWeightChange(value);
+              } else {
+                // For non-barbell exercises, weight input directly updates weightPerSide
+                handleWeightPerSideChange(value);
+              }
+            }}
           />
         </div>
         <div className="set__reps set-table__item reps">

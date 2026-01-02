@@ -1,7 +1,7 @@
 .set {
   color: currentColor;
   position: relative;
-  padding: 0.5rem 0;
+  padding: 1rem 0;
   font-size: 12px;
   font-weight: 600;
   & + .set {
@@ -16,11 +16,24 @@
     margin: 0;
     width: auto;
     min-width: 0;
-    max-width: 45px; /* Adjust this value as needed */
+    max-width: 60px; /* Adjust this value as needed */
     flex-shrink: 1;
     text-align: right;
+    width: 100%;
   }
-  &__button-remove {
-    border-left: 1px solid rgba(255, 255, 255, 0.035);
+  &__button-close {
+    opacity: 0.35;
+    height: 10px;
+    width: 10px;
+    .button__stroke {
+      height: 1px;
+    }
+    &:focus,
+    &:hover {
+      opacity: 1;
+    }
+  }
+  &__count-value {
+    font-weight: 900;
   }
 }

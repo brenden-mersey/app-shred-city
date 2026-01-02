@@ -45,4 +45,8 @@
     flex-flow: column;
     padding: 2rem 0;
   }
+
+  .calculator__button-clear {
+    max-width: none;
+  }
 }

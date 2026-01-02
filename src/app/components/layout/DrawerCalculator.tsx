@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useDrawer } from "../../contexts/DrawerContext";
 import Calculator from "../Calculator";
+import ButtonClose from "../ui/ButtonClose";
 
 type DrawerProps = {
   children?: React.ReactNode;
@@ -57,14 +58,11 @@ export default function DrawerCalculator({ children }: DrawerProps) {
     <aside className={classes}>
       <div className={`${drawerClass}__header`}>
         <div className="header__container container container--flex">
-          <button
-            className={`${drawerClass}__button-close button`}
-            onClick={closeCalculator}
-            aria-label="Close calculator"
-          >
-            <span className={`${drawerClass}__button-close-stroke`}></span>
-            <span className={`${drawerClass}__button-close-stroke`}></span>
-          </button>
+          <ButtonClose
+            ariaLabel="Close Calculator"
+            blockName={drawerClass}
+            handleClick={closeCalculator}
+          />
         </div>
       </div>
       <div className={`${drawerClass}__main`}>

@@ -1,0 +1,21 @@
+.set-table {
+  display: grid;
+  grid-template-columns: 20fr 20fr 26.25fr 26.25fr 7.5fr;
+  gap: 0.75rem;
+  &--with-weight-per-side {
+    grid-template-columns: 11.75fr 11.75fr 23fr 23fr 23fr 7.5fr;
+  }
+}
+
+.set-table__item {
+  display: inline-flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  &.count {
+    justify-content: flex-start;
+  }
+  &.reps {
+    justify-content: flex-end;
+  }
+}

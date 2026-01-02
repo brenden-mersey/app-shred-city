@@ -1,0 +1,188 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { Set as SetType, EquipmentType } from "@/app/types/workout";
+import { useWorkout } from "@/app/contexts/WorkoutContext";
+import ButtonClose from "../ui/ButtonClose";
+
+type SetProps = {
+  set: SetType;
+  index: number;
+  exerciseId: string;
+};
+
+/**
+ * Calculate weight per side from total weight (reverse of calculateTotalWeight)
+ */
+function calculateWeightPerSide(
+  totalWeight: number,
+  equipmentType: EquipmentType,
+  barWeight: number = 45
+): number {
+  switch (equipmentType) {
+    case "barbell":
+    case "trap-bar":
+      return (totalWeight - barWeight) / 2;
+    case "dumbbell":
+      return totalWeight / 2; // Pair
+    case "kettlebell":
+      return totalWeight; // Single
+    case "landmine":
+      return totalWeight - barWeight;
+    case "machine":
+    case "cable":
+    case "bodyweight":
+    case "other":
+      return totalWeight;
+    default:
+      return totalWeight;
+  }
+}
+
+/**
+ * Calculate total weight from weight per side (same as context function)
+ */
+/**
+ * Calculate total weight from weight per side (matches context function)
+ */
+function calculateTotalWeight(
+  weightPerSide: number,
+  equipmentType: EquipmentType,
+  barWeight: number = 45
+): number {
+  switch (equipmentType) {
+    case "barbell":
+    case "trap-bar":
+      return weightPerSide * 2 + barWeight;
+    case "dumbbell":
+    case "kettlebell":
+      return weightPerSide; // Matches context logic
+    case "landmine":
+      return weightPerSide + barWeight;
+    case "machine":
+    case "cable":
+    case "bodyweight":
+    case "other":
+      return weightPerSide;
+    default:
+      return weightPerSide;
+  }
+}
+
+export default function Set({ set, index, exerciseId }: SetProps) {
+  const { updateSet, removeSet } = useWorkout();
+  const showWeightPerSide =
+    set.equipmentType === "barbell" || set.equipmentType === "trap-bar";
+  const setNumber = index + 1;
+
+  // Local state for inputs (controlled components)
+  const [totalWeight, setTotalWeight] = useState(set.totalWeight || 0);
+  const [weightPerSide, setWeightPerSide] = useState(set.weightPerSide || 0);
+  const [reps, setReps] = useState(set.reps || 0);
+
+  // Sync with set data when it changes
+  useEffect(() => {
+    setTotalWeight(set.totalWeight || 0);
+    setWeightPerSide(set.weightPerSide || 0);
+    setReps(set.reps || 0);
+  }, [set.totalWeight, set.weightPerSide, set.reps]);
+
+  const handleTotalWeightChange = (value: number) => {
+    setTotalWeight(value);
+    // Calculate weight per side from total weight
+    const calculatedWeightPerSide = calculateWeightPerSide(
+      value,
+      set.equipmentType
+    );
+    setWeightPerSide(calculatedWeightPerSide);
+
+    // Update the set in context
+    updateSet(exerciseId, set.id, {
+      totalWeight: value,
+      weightPerSide: calculatedWeightPerSide,
+    });
+  };
+
+  const handleWeightPerSideChange = (value: number) => {
+    setWeightPerSide(value);
+    // Calculate total weight from weight per side
+    const calculatedTotalWeight = calculateTotalWeight(
+      value,
+      set.equipmentType
+    );
+    setTotalWeight(calculatedTotalWeight);
+
+    // Update the set in context
+    updateSet(exerciseId, set.id, {
+      weightPerSide: value,
+      totalWeight: calculatedTotalWeight,
+    });
+  };
+
+  const handleRepsChange = (value: number) => {
+    setReps(value);
+    updateSet(exerciseId, set.id, {
+      reps: value,
+    });
+  };
+
+  const handleRemoveSet = () => {
+    removeSet(exerciseId, set.id);
+  };
+
+  return (
+    <div className="set">
+      <div
+        className={`set__details set-table ${
+          showWeightPerSide ? "set-table--with-weight-per-side" : ""
+        }`}
+      >
+        <div className="set__count set-table__item count">
+          <span className="set__count-value">{setNumber}</span>
+        </div>
+        <div className="set__previous-weight set-table__item previous-weight">
+          <span className="set__previous-weight-value">0</span>
+        </div>
+        {showWeightPerSide && (
+          <div className="set__weight-per-side set-table__item weight-per-side">
+            <input
+              type="number"
+              min={0}
+              step={0.5}
+              value={weightPerSide || ""}
+              onChange={(e) =>
+                handleWeightPerSideChange(parseFloat(e.target.value) || 0)
+              }
+            />
+          </div>
+        )}
+        <div className="set__weight set-table__item weight">
+          <input
+            type="number"
+            min={0}
+            step={0.5}
+            value={totalWeight || ""}
+            onChange={(e) =>
+              handleTotalWeightChange(parseFloat(e.target.value) || 0)
+            }
+          />
+        </div>
+        <div className="set__reps set-table__item reps">
+          <input
+            type="number"
+            min={0}
+            value={reps || ""}
+            onChange={(e) => handleRepsChange(parseInt(e.target.value) || 0)}
+          />
+        </div>
+        <div className="set__button-remove set-table__item button-remove">
+          <ButtonClose
+            ariaLabel="Remove Set"
+            blockName="set"
+            handleClick={handleRemoveSet}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}

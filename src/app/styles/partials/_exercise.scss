@@ -1,0 +1,22 @@
+@use "../extensions/rounded-corners" as *;
+@use "../extensions/padding" as *;
+
+.exercise {
+  @extend %rounded-md !optional;
+  @extend %padding-md !optional;
+  background-color: var(--dark-secondary);
+  display: flex;
+  flex-flow: column;
+  gap: 0.75rem;
+  &__set-legend {
+    font-size: 12px;
+    font-weight: 400;
+  }
+  &__set-list {
+    border-top: 1px solid rgba(255, 255, 255, 0.035);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.035);
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: 0.75rem 0;
+  }
+}

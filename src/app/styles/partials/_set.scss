@@ -8,18 +8,32 @@
     border-top: 1px solid rgba(255, 255, 255, 0.035);
   }
   input {
+    border-radius: 0.25rem;
     background: var(--dark-primary);
     color: currentColor;
     outline: none;
     border: none;
-    padding: 0;
+    padding: 0.25rem;
     margin: 0;
     width: auto;
     min-width: 0;
     max-width: 60px; /* Adjust this value as needed */
     flex-shrink: 1;
-    text-align: right;
+    text-align: center;
     width: 100%;
+
+    // Hide number input spinners
+    &[type="number"] {
+      touch-action: manipulation;
+      appearance: textfield; // Standard property
+      -moz-appearance: textfield; // Firefox
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none; // Chrome, Safari, Edge
+        appearance: none; // Standard property
+        margin: 0;
+      }
+    }
   }
   &__button-close {
     opacity: 0.35;

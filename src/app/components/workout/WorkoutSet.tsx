@@ -5,7 +5,7 @@ import { Set as SetType, EquipmentType } from "@/app/types/workout";
 import { useWorkout } from "@/app/contexts/WorkoutContext";
 import ButtonClose from "../ui/ButtonClose";
 
-type SetProps = {
+type WorkoutSetProps = {
   set: SetType;
   index: number;
   exerciseId: string;
@@ -40,9 +40,6 @@ function calculateWeightPerSide(
 }
 
 /**
- * Calculate total weight from weight per side (same as context function)
- */
-/**
  * Calculate total weight from weight per side (matches context function)
  */
 function calculateTotalWeight(
@@ -69,10 +66,15 @@ function calculateTotalWeight(
   }
 }
 
-export default function Set({ set, index, exerciseId }: SetProps) {
-  const { updateSet, removeSet } = useWorkout();
+export default function WorkoutSet({
+  set,
+  index,
+  exerciseId,
+}: WorkoutSetProps) {
+  const { updateSet, removeSet, workout } = useWorkout();
   const showWeightPerSide =
     set.equipmentType === "barbell" || set.equipmentType === "trap-bar";
+  const showPreviousValues = workout.hasPreviousData ?? false;
   const setNumber = index + 1;
 
   // Local state for inputs (controlled components)
@@ -142,17 +144,17 @@ export default function Set({ set, index, exerciseId }: SetProps) {
 
   return (
     <div className="set">
-      <div
-        className={`set__details set-table ${
-          showWeightPerSide ? "set-table--with-weight-per-side" : ""
-        }`}
-      >
+      <div className="set__details set-table">
         <div className="set__count set-table__item count">
           <span className="set__count-value">{setNumber}</span>
         </div>
-        <div className="set__previous-weight set-table__item previous-weight">
-          <span className="set__previous-weight-value">0</span>
-        </div>
+        {showPreviousValues && (
+          <div className="set__previous-weight set-table__item previous-weight">
+            <span className="set__previous-weight-value">
+              {set.previousWeight ?? 0}
+            </span>
+          </div>
+        )}
         {showWeightPerSide && (
           <div className="set__weight-per-side set-table__item weight-per-side">
             <input

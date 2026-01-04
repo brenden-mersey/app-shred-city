@@ -1,8 +1,9 @@
 "use client";
 
+import { SERIES_OPTIONS } from "@/app/constants/workout";
 import { useWorkout } from "@/app/contexts/WorkoutContext";
-import Exercise from "@/app/components/Exercise";
-import AddExercise from "./AddExercise";
+import WorkoutExercise from "./WorkoutExercise";
+import WorkoutAddExercise from "./WorkoutAddExercise";
 
 export default function Workout() {
   const { workout } = useWorkout();
@@ -30,7 +31,7 @@ export default function Workout() {
           </div>
         ) : (
           <div className="workout__exercises">
-            {(["A", "B", "C", "D", "E"] as const).map((series) => {
+            {SERIES_OPTIONS.map((series) => {
               const exercisesInSeries = workout.exercises.filter(
                 (ex) => ex.series === series
               );
@@ -58,7 +59,10 @@ export default function Workout() {
                   </div>
                   <div className="workout__series-exercises">
                     {exercisesInSeries.map((exercise) => (
-                      <Exercise key={exercise.id} exerciseProps={exercise} />
+                      <WorkoutExercise
+                        key={exercise.id}
+                        exerciseProps={exercise}
+                      />
                     ))}
                   </div>
                 </div>
@@ -68,7 +72,7 @@ export default function Workout() {
         )}
       </div>
       <div className="workout__footer">
-        <AddExercise />
+        <WorkoutAddExercise />
       </div>
     </div>
   );

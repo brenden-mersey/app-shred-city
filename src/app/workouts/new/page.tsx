@@ -5,12 +5,13 @@ import { WorkoutProvider } from "@/app/contexts/WorkoutContext";
 import Workout from "@/app/components/workout/Workout";
 
 // Helper function to create a new empty workout
-function createNewWorkout(): WorkoutSession {
+function createNewWorkout(hasPreviousData: boolean = false): WorkoutSession {
   return {
     id: crypto.randomUUID(),
     date: new Date(),
     exercises: [],
     startTime: new Date(),
+    hasPreviousData,
   };
 }
 

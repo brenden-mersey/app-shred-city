@@ -2,6 +2,7 @@
 
 import { useDrawer } from "../../contexts/DrawerContext";
 import IconCalculator from "../icons/iconCalculator";
+import Link from "next/link";
 
 export default function Header() {
   const { toggleMenu, menuIsOpen, toggleCalculator, calculatorIsOpen } =
@@ -17,7 +18,9 @@ export default function Header() {
   return (
     <header className="header">
       <div className="header__container container container--flex">
-        <h1 className="header__title">SC</h1>
+        <h1 className="header__title">
+          <Link href="/">SC</Link>
+        </h1>
         <button
           className="header__button-calculator button"
           onClick={toggleCalculator}

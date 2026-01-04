@@ -6,9 +6,9 @@ import {
   EXERCISE_LIBRARY,
   type ExerciseTemplate,
 } from "@/app/constants/exercises";
-import { Series } from "@/app/types/workout";
+import { SERIES_OPTIONS } from "@/app/constants/workout";
 
-export default function AddExercise() {
+export default function WorkoutAddExercise() {
   const { addExercise } = useWorkout();
   const [selectedExerciseId, setSelectedExerciseId] = useState<string>("");
 
@@ -37,21 +37,31 @@ export default function AddExercise() {
   };
 
   return (
-    <div className="add-exercise">
-      <select
-        className="add-exercise__select"
-        value={selectedExerciseId}
-        onChange={(e) => setSelectedExerciseId(e.target.value)}
-      >
-        <option value="">Select an exercise...</option>
-        {EXERCISE_LIBRARY.map((exercise) => (
-          <option key={exercise.id} value={exercise.id}>
-            {exercise.name}
-          </option>
-        ))}
-      </select>
+    <div className="workout__add-exercise">
+      <div className="workout__add-exercise-options">
+        <select
+          className="workout__add-exercise-select"
+          value={selectedExerciseId}
+          onChange={(e) => setSelectedExerciseId(e.target.value)}
+        >
+          <option value="">Select an exercise...</option>
+          {EXERCISE_LIBRARY.map((exercise) => (
+            <option key={exercise.id} value={exercise.id}>
+              {exercise.name}
+            </option>
+          ))}
+        </select>
+        <select className="workout__add-exercise-series">
+          <option value="">Select a series...</option>
+          {SERIES_OPTIONS.map((series) => (
+            <option key={series} value={series}>
+              {series}
+            </option>
+          ))}
+        </select>
+      </div>
       <button
-        className="add-exercise__button button button--pill"
+        className="workout__button-add-exercise button button--pill"
         onClick={handleAdd}
         disabled={!selectedExerciseId}
       >

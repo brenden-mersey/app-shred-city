@@ -61,6 +61,10 @@ export type Set = {
   setNumber: number;
   /** Timestamp when the set was performed */
   timestamp: Date;
+  /** Previous weight from template/existing workout (for comparison) */
+  previousWeight?: number;
+  /** Previous reps from template/existing workout (for comparison) */
+  previousReps?: number;
 };
 
 /**
@@ -100,6 +104,8 @@ export type WorkoutSession = {
   date: Date;
   /** Template name if created from a template */
   templateName?: string;
+  /** Whether this workout has previous data to display (from template/existing workout) */
+  hasPreviousData?: boolean;
   /** Exercises performed in this workout */
   exercises: Exercise[];
   /** Duration in minutes */

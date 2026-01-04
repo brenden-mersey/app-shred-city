@@ -2,21 +2,31 @@
 
 import type { Exercise } from "@/app/types/workout";
 import { Series } from "@/app/types/workout";
+import { SERIES_OPTIONS } from "@/app/constants/workout";
 import { useWorkout } from "@/app/contexts/WorkoutContext";
-import Set from "./workout/Set";
+import WorkoutSet from "./WorkoutSet";
 
-type ExerciseProps = {
+type WorkoutExerciseProps = {
   exerciseProps: Exercise;
 };
 
-const SERIES_OPTIONS: Series[] = ["A", "B", "C", "D", "E"];
-
-export default function Exercise({ exerciseProps }: ExerciseProps) {
-  const { addSet, updateExercise } = useWorkout();
+export default function WorkoutExercise({ exerciseProps }: WorkoutExerciseProps) {
+  const { addSet, updateExercise, workout } = useWorkout();
+  const blockName = "exercise";
+  const blockClasses = [blockName];
   const showWeightPerSide =
     exerciseProps.equipmentType === "barbell" ||
     exerciseProps.equipmentType === "trap-bar";
+  const showPreviousValues = workout.hasPreviousData ?? false;
   const weightUnitOfMeasurement = "Lbs";
+
+  if (showPreviousValues) {
+    blockClasses.push(`${blockName}--with-previous-values`);
+  }
+
+  if (showWeightPerSide) {
+    blockClasses.push(`${blockName}--with-weight-per-side`);
+  }
 
   const handleAddSet = () => {
     // Get the last set's values to use as defaults
@@ -36,7 +46,12 @@ export default function Exercise({ exerciseProps }: ExerciseProps) {
   };
 
   return (
-    <div className="exercise">
+    <div
+      className={blockClasses.join(" ")}
+      data-series={exerciseProps.series.toLowerCase()}
+      data-weight-per-side={showWeightPerSide}
+      data-previous-values={showPreviousValues}
+    >
       <div className="exercise__header">
         <strong className="exercise__name text text--h3">
           {exerciseProps.name}
@@ -55,24 +70,24 @@ export default function Exercise({ exerciseProps }: ExerciseProps) {
         </select>
       </div>
       <div className="exercise__sets">
-        <div
-          className={`exercise__set-legend set-table ${
-            showWeightPerSide ? "set-table--with-weight-per-side" : ""
-          }`}
-        >
+        <div className="exercise__set-legend set-table">
           <div className="exercise__set-legend-item set-table__item count">
             Set
           </div>
-          <div className="exercise__set-legend-item set-table__item previous-weight">
-            Prev {weightUnitOfMeasurement}
-          </div>
+          {showPreviousValues && (
+            <div className="exercise__set-legend-item set-table__item previous-weight">
+              Previous
+            </div>
+          )}
           {showWeightPerSide && (
             <div className="exercise__set-legend-item set-table__item weight-per-side">
               {weightUnitOfMeasurement}/Side
             </div>
           )}
           <div className="exercise__set-legend-item set-table__item weight">
-            {showWeightPerSide ? "Lbs (Total)" : weightUnitOfMeasurement}
+            {showWeightPerSide
+              ? `${weightUnitOfMeasurement} (Total)`
+              : weightUnitOfMeasurement}
           </div>
           <div className="exercise__set-legend-item set-table__item reps">
             Reps
@@ -81,7 +96,7 @@ export default function Exercise({ exerciseProps }: ExerciseProps) {
         </div>
         <div className="exercise__set-list">
           {exerciseProps.sets.map((set, index) => (
-            <Set
+            <WorkoutSet
               key={set.id}
               set={set}
               index={index}
@@ -99,3 +114,4 @@ export default function Exercise({ exerciseProps }: ExerciseProps) {
     </div>
   );
 }
+

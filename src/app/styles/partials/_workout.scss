@@ -9,7 +9,7 @@
   grid-template-columns: 1fr;
   row-gap: 2rem;
 
-  .add-exercise {
+  &__add-exercise {
     @extend %padding-md;
     @extend %rounded-md;
     background-color: var(--dark-secondary);

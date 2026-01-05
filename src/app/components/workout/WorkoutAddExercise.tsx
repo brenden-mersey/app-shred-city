@@ -7,10 +7,12 @@ import {
   type ExerciseTemplate,
 } from "@/app/constants/exercises";
 import { SERIES_OPTIONS } from "@/app/constants/workout";
+import { Series } from "@/app/types/workout";
 
 export default function WorkoutAddExercise() {
   const { addExercise } = useWorkout();
   const [selectedExerciseId, setSelectedExerciseId] = useState<string>("");
+  const [selectedSeries, setSelectedSeries] = useState<Series | "">("");
 
   const handleAdd = () => {
     if (!selectedExerciseId) return;
@@ -28,12 +30,13 @@ export default function WorkoutAddExercise() {
       muscleGroups: exerciseTemplate.muscleGroups,
       defaultEquipment: exerciseTemplate.defaultEquipment,
       equipmentType: exerciseTemplate.defaultEquipment,
-      series: "A", // Default to series A, can be changed later
+      series: (selectedSeries || "A") as Series, // Use selected series or default to "A"
       instructions: exerciseTemplate.instructions,
     });
 
-    // Reset selection
+    // Reset selections
     setSelectedExerciseId("");
+    setSelectedSeries("");
   };
 
   return (
@@ -51,7 +54,11 @@ export default function WorkoutAddExercise() {
             </option>
           ))}
         </select>
-        <select className="workout__add-exercise-series select select--pill">
+        <select
+          className="workout__add-exercise-series select select--pill"
+          value={selectedSeries}
+          onChange={(e) => setSelectedSeries(e.target.value as Series | "")}
+        >
           <option value="">Select series...</option>
           {SERIES_OPTIONS.map((series) => (
             <option key={series} value={series}>

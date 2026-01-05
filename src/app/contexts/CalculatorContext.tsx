@@ -44,8 +44,8 @@ export function CalculatorProvider({
   children: React.ReactNode;
 }) {
   // States
-  const [isDoubled, setIsDoubled] = useState(false);
-  const [includeBarWeight, setIncludeBarWeight] = useState(false);
+  const [isDoubled, setIsDoubled] = useState(true);
+  const [includeBarWeight, setIncludeBarWeight] = useState(true);
   const [barWeight, setBarWeight] = useState(45);
   const [loadedPlates, setLoadedPlates] = useState<LoadedPlate[]>([]);
 

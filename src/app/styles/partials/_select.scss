@@ -1,0 +1,35 @@
+@use "../extensions/rounded-corners" as *;
+@use "../variables" as *;
+
+.select--pill,
+.select--pill-outline {
+  @extend %rounded-pill;
+  height: $button-height;
+  border: 1px solid currentColor;
+  text-align: center;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.025rem;
+  padding: 0 1rem;
+
+  // Hide default arrow
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  // Custom chevron (external SVG file)
+  background-image: url("/chevron-down.svg");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 12px;
+}
+
+.select--pill {
+  background: var(--light-primary);
+  color: var(--dark-primary);
+}
+
+.select--pill-outline {
+  color: var(--light-primary);
+  background: transparent;
+}

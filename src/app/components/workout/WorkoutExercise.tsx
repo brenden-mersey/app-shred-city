@@ -10,7 +10,9 @@ type WorkoutExerciseProps = {
   exerciseProps: Exercise;
 };
 
-export default function WorkoutExercise({ exerciseProps }: WorkoutExerciseProps) {
+export default function WorkoutExercise({
+  exerciseProps,
+}: WorkoutExerciseProps) {
   const { addSet, updateExercise, workout } = useWorkout();
   const blockName = "exercise";
   const blockClasses = [blockName];
@@ -57,7 +59,7 @@ export default function WorkoutExercise({ exerciseProps }: WorkoutExerciseProps)
           {exerciseProps.name}
         </strong>
         <select
-          className="exercise__series-select"
+          className="exercise__series-select select select--pill-outline"
           value={exerciseProps.series}
           onChange={(e) => handleSeriesChange(e.target.value as Series)}
           aria-label="Exercise series"
@@ -71,7 +73,7 @@ export default function WorkoutExercise({ exerciseProps }: WorkoutExerciseProps)
       </div>
       <div className="exercise__sets">
         <div className="exercise__set-legend set-table">
-          <div className="exercise__set-legend-item set-table__item count">
+          <div className="exercise__set-legend-item set-table__item set-count">
             Set
           </div>
           {showPreviousValues && (
@@ -92,7 +94,7 @@ export default function WorkoutExercise({ exerciseProps }: WorkoutExerciseProps)
           <div className="exercise__set-legend-item set-table__item reps">
             Reps
           </div>
-          <div className="exercise__set-legend-item set-table__item remove"></div>
+          <div className="exercise__set-legend-item set-table__item remove-set"></div>
         </div>
         <div className="exercise__set-list">
           {exerciseProps.sets.map((set, index) => (
@@ -114,4 +116,3 @@ export default function WorkoutExercise({ exerciseProps }: WorkoutExerciseProps)
     </div>
   );
 }
-

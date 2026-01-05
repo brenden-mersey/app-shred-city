@@ -17,7 +17,6 @@
     margin: 0;
     width: auto;
     min-width: 0;
-    max-width: 60px; /* Adjust this value as needed */
     flex-shrink: 1;
     text-align: center;
     width: 100%;
@@ -33,6 +32,15 @@
         appearance: none; // Standard property
         margin: 0;
       }
+    }
+    &[name="weight-per-side"] {
+      max-width: 60px; /* Adjust this value as needed */
+    }
+    &[name="weight"] {
+      max-width: 60px; /* Adjust this value as needed */
+    }
+    &[name="reps"] {
+      max-width: 30px; /* Adjust this value as needed */
     }
   }
   &__button-close {

@@ -18,6 +18,20 @@
     gap: 1rem;
   }
 
+  &__add-exercise-options {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1rem;
+    width: 100%;
+    select {
+      width: 100%;
+    }
+  }
+
+  &__button-add-exercise {
+    margin: 0 auto;
+  }
+
   &__exercises,
   &__series-exercises {
     display: grid;
@@ -37,6 +51,9 @@
   }
 
   [data-series="a"] {
+    .exercise__series-select {
+      //color: map.get($theme-colours, "highlight-green");
+    }
     .exercise__button-add-set {
       @extend %button-theme-hightlight-green;
     }
@@ -48,6 +65,9 @@
     }
   }
   [data-series="b"] {
+    .exercise__series-select {
+      //color: map.get($theme-colours, "highlight-blue");
+    }
     .exercise__button-add-set {
       @extend %button-theme-hightlight-blue;
     }
@@ -59,6 +79,9 @@
     }
   }
   [data-series="c"] {
+    .exercise__series-select {
+      //color: map.get($theme-colours, "highlight-orange");
+    }
     .exercise__button-add-set {
       @extend %button-theme-hightlight-orange;
     }
@@ -70,6 +93,9 @@
     }
   }
   [data-series="d"] {
+    .exercise__series-select {
+      //color: map.get($theme-colours, "highlight-pink");
+    }
     .exercise__button-add-set {
       @extend %button-theme-hightlight-pink;
     }
@@ -81,6 +107,9 @@
     }
   }
   [data-series="e"] {
+    .exercise__series-select {
+      //color: map.get($theme-colours, "highlight-purple");
+    }
     .exercise__button-add-set {
       @extend %button-theme-hightlight-purple;
     }

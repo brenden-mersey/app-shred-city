@@ -1,10 +1,19 @@
+// .set-table {
+//   display: grid;
+//   grid-template-columns: 20fr 20fr 26.25fr 26.25fr 7.5fr;
+//   gap: 0.75rem;
+//   &--with-weight-per-side {
+//     grid-template-columns: 11.75fr 11.75fr 23fr 23fr 23fr 7.5fr;
+//   }
+// }
+
 .set-table {
-  display: grid;
-  grid-template-columns: 20fr 20fr 26.25fr 26.25fr 7.5fr;
+  display: flex;
   gap: 0.75rem;
-  &--with-weight-per-side {
-    grid-template-columns: 11.75fr 11.75fr 23fr 23fr 23fr 7.5fr;
-  }
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .set-table__item {
@@ -12,10 +21,31 @@
   text-align: center;
   justify-content: center;
   align-items: center;
-  &.count {
+  &.set-count {
+    flex: 0 0 20px; /* Fixed 25px, won't grow or shrink */
+    min-width: 20px; /* Ensures empty items maintain size */
     justify-content: flex-start;
   }
+  &.previous-weight {
+    flex: 1; /* Takes available space */
+    max-width: 120px; /* But caps at 120px */
+    font-size: 90%;
+  }
+  &.weight-per-side {
+    flex: 1; /* Takes available space */
+    max-width: 120px; /* But caps at 120px */
+  }
+  &.weight {
+    flex: 1; /* Takes available space */
+    max-width: 120px; /* But caps at 120px */
+  }
   &.reps {
+    flex: 0 0 40px; /* Fixed 25px, won't grow or shrink */
+    min-width: 40px; /* Ensures empty items maintain size */
+  }
+  &.remove-set {
+    flex: 0 0 10px; /* Fixed 10px, won't grow or shrink */
+    min-width: 10px; /* Ensures empty items maintain size */
     justify-content: flex-end;
   }
 }

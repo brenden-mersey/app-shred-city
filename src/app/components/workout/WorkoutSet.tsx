@@ -143,63 +143,64 @@ export default function WorkoutSet({
   };
 
   return (
-    <div className="set">
-      <div className="set__details set-table">
-        <div className="set__count set-table__item count">
-          <span className="set__count-value">{setNumber}</span>
+    <div className="set set-table">
+      <div className="set-table__item set-count">
+        <span className="set__count-value">{setNumber}</span>
+      </div>
+      {showPreviousValues && (
+        <div className="set-table__item previous-weight">
+          <span className="set__previous-weight-value">
+            {set.previousWeight ?? "--"}
+          </span>
         </div>
-        {showPreviousValues && (
-          <div className="set__previous-weight set-table__item previous-weight">
-            <span className="set__previous-weight-value">
-              {set.previousWeight ?? 0}
-            </span>
-          </div>
-        )}
-        {showWeightPerSide && (
-          <div className="set__weight-per-side set-table__item weight-per-side">
-            <input
-              type="number"
-              min={0}
-              step={0.5}
-              value={weightPerSide || ""}
-              onChange={(e) =>
-                handleWeightPerSideChange(parseFloat(e.target.value) || 0)
-              }
-            />
-          </div>
-        )}
-        <div className="set__weight set-table__item weight">
+      )}
+      {showWeightPerSide && (
+        <div className="set-table__item weight-per-side">
           <input
             type="number"
+            name="weight-per-side"
             min={0}
             step={0.5}
-            value={showWeightPerSide ? totalWeight || "" : weightPerSide || ""}
-            onChange={(e) => {
-              const value = parseFloat(e.target.value) || 0;
-              if (showWeightPerSide) {
-                handleTotalWeightChange(value);
-              } else {
-                // For non-barbell exercises, weight input directly updates weightPerSide
-                handleWeightPerSideChange(value);
-              }
-            }}
+            value={weightPerSide || ""}
+            onChange={(e) =>
+              handleWeightPerSideChange(parseFloat(e.target.value) || 0)
+            }
           />
         </div>
-        <div className="set__reps set-table__item reps">
-          <input
-            type="number"
-            min={0}
-            value={reps || ""}
-            onChange={(e) => handleRepsChange(parseInt(e.target.value) || 0)}
-          />
-        </div>
-        <div className="set__button-remove set-table__item button-remove">
-          <ButtonClose
-            ariaLabel="Remove Set"
-            blockName="set"
-            handleClick={handleRemoveSet}
-          />
-        </div>
+      )}
+      <div className="set-table__item weight">
+        <input
+          type="number"
+          name="weight"
+          min={0}
+          step={0.5}
+          value={showWeightPerSide ? totalWeight || "" : weightPerSide || ""}
+          onChange={(e) => {
+            const value = parseFloat(e.target.value) || 0;
+            if (showWeightPerSide) {
+              handleTotalWeightChange(value);
+            } else {
+              // For non-barbell exercises, weight input directly updates weightPerSide
+              handleWeightPerSideChange(value);
+            }
+          }}
+        />
+      </div>
+      <div className="set-table__item reps">
+        <input
+          type="number"
+          min={0}
+          name="reps"
+          value={reps || ""}
+          onChange={(e) => handleRepsChange(parseInt(e.target.value) || 0)}
+        />
+      </div>
+      <div className="set-table__item remove-set">
+        <ButtonClose
+          ariaLabel="Remove Set"
+          blockName="set"
+          handleClick={handleRemoveSet}
+        />
       </div>
     </div>
   );

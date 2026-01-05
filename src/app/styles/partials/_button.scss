@@ -52,7 +52,7 @@
 .button--pill {
   @extend %rounded-pill;
   height: $button-height;
-  border: 2px solid currentColor;
+  border: 1px solid currentColor;
   color: inherit;
   font-weight: 900;
   text-transform: uppercase;

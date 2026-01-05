@@ -40,19 +40,19 @@ export default function WorkoutAddExercise() {
     <div className="workout__add-exercise">
       <div className="workout__add-exercise-options">
         <select
-          className="workout__add-exercise-select"
+          className="workout__add-exercise-select select select--pill"
           value={selectedExerciseId}
           onChange={(e) => setSelectedExerciseId(e.target.value)}
         >
-          <option value="">Select an exercise...</option>
+          <option value="">Select exercise...</option>
           {EXERCISE_LIBRARY.map((exercise) => (
             <option key={exercise.id} value={exercise.id}>
               {exercise.name}
             </option>
           ))}
         </select>
-        <select className="workout__add-exercise-series">
-          <option value="">Select a series...</option>
+        <select className="workout__add-exercise-series select select--pill">
+          <option value="">Select series...</option>
           {SERIES_OPTIONS.map((series) => (
             <option key={series} value={series}>
               {series}

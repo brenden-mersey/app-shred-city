@@ -59,3 +59,11 @@ $plate-colours: (
   black: #414141,
   off-white: #e6e6e3,
 );
+
+$series-colours: (
+  a: map.get($theme-colours, "highlight-green"),
+  b: map.get($theme-colours, "highlight-blue"),
+  c: map.get($theme-colours, "highlight-orange"),
+  d: map.get($theme-colours, "highlight-pink"),
+  e: map.get($theme-colours, "highlight-purple"),
+);

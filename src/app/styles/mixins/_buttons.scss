@@ -1,0 +1,13 @@
+@use "sass:color";
+@use "sass:map";
+@use "../variables" as *;
+
+@mixin button-colour-theme($colour) {
+  background: color.adjust($colour, $alpha: -0.95);
+  color: $colour;
+  border-color: $colour;
+  &:hover,
+  &:focus {
+    background: color.adjust($colour, $alpha: -0.85);
+  }
+}

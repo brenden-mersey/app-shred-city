@@ -3,6 +3,7 @@
 @use "../extensions/button-themes" as *;
 @use "../extensions/padding" as *;
 @use "../extensions/rounded-corners" as *;
+@use "../mixins/buttons" as *;
 
 .workout {
   display: grid;
@@ -42,6 +43,17 @@
     gap: 3rem;
   }
 
+  &__series {
+    @each $name, $value in $series-colours {
+      &[data-series="#{$name}"] {
+        --series-colour: #{$value};
+        .exercise__button-add-set {
+          @include button-colour-theme($value);
+        }
+      }
+    }
+  }
+
   &__series-header {
     margin-bottom: 1.5rem;
   }
@@ -50,74 +62,7 @@
     gap: 1.5rem;
   }
 
-  [data-series="a"] {
-    .exercise__series-select {
-      //color: map.get($theme-colours, "highlight-green");
-    }
-    .exercise__button-add-set {
-      @extend %button-theme-hightlight-green;
-    }
-    .set__count-value {
-      color: map.get($theme-colours, "highlight-green");
-    }
-    .workout__series-title-letter {
-      color: map.get($theme-colours, "highlight-green");
-    }
-  }
-  [data-series="b"] {
-    .exercise__series-select {
-      //color: map.get($theme-colours, "highlight-blue");
-    }
-    .exercise__button-add-set {
-      @extend %button-theme-hightlight-blue;
-    }
-    .set__count-value {
-      color: map.get($theme-colours, "highlight-blue");
-    }
-    .workout__series-title-letter {
-      color: map.get($theme-colours, "highlight-blue");
-    }
-  }
-  [data-series="c"] {
-    .exercise__series-select {
-      //color: map.get($theme-colours, "highlight-orange");
-    }
-    .exercise__button-add-set {
-      @extend %button-theme-hightlight-orange;
-    }
-    .set__count-value {
-      color: map.get($theme-colours, "highlight-orange");
-    }
-    .workout__series-title-letter {
-      color: map.get($theme-colours, "highlight-orange");
-    }
-  }
-  [data-series="d"] {
-    .exercise__series-select {
-      //color: map.get($theme-colours, "highlight-pink");
-    }
-    .exercise__button-add-set {
-      @extend %button-theme-hightlight-pink;
-    }
-    .set__count-value {
-      color: map.get($theme-colours, "highlight-pink");
-    }
-    .workout__series-title-letter {
-      color: map.get($theme-colours, "highlight-pink");
-    }
-  }
-  [data-series="e"] {
-    .exercise__series-select {
-      //color: map.get($theme-colours, "highlight-purple");
-    }
-    .exercise__button-add-set {
-      @extend %button-theme-hightlight-purple;
-    }
-    .set__count-value {
-      color: map.get($theme-colours, "highlight-purple");
-    }
-    .workout__series-title-letter {
-      color: map.get($theme-colours, "highlight-purple");
-    }
+  &__series-title-letter {
+    color: var(--series-colour);
   }
 }

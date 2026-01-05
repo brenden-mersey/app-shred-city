@@ -8,11 +8,11 @@
     border-top: 1px solid rgba(255, 255, 255, 0.035);
   }
   input {
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 0.25rem;
     background: var(--dark-primary);
     color: currentColor;
     outline: none;
-    border: none;
     padding: 0.25rem;
     margin: 0;
     width: auto;
@@ -42,6 +42,9 @@
     &[name="reps"] {
       max-width: 30px; /* Adjust this value as needed */
     }
+    &:focus {
+      border-color: var(--series-colour);
+    }
   }
   &__button-close {
     opacity: 0.35;
@@ -56,6 +59,7 @@
     }
   }
   &__count-value {
+    color: var(--series-colour);
     font-weight: 900;
   }
 }

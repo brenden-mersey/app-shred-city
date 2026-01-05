@@ -18,14 +18,37 @@ export type ExerciseTemplate = {
  * This is a basic starter set. Can be expanded later.
  */
 export const EXERCISE_LIBRARY: ExerciseTemplate[] = [
-  // Compound - Lower Body
   {
     id: "squat",
     name: "Barbell Back Squat",
     category: "Compound",
     muscleGroups: ["Quadriceps", "Glutes", "Hamstrings"],
     defaultEquipment: "barbell",
-    instructions: "Place barbell on upper back, descend until thighs are parallel to floor, drive up through heels",
+    instructions:
+      "Place barbell on upper back, descend until thighs are parallel to floor, drive up through heels",
+  },
+  {
+    id: "bench-press",
+    name: "Barbell Bench Press",
+    category: "Compound",
+    muscleGroups: ["Chest", "Triceps", "Shoulders"],
+    defaultEquipment: "barbell",
+    instructions:
+      "Lower bar to chest, pause briefly, press up until arms are fully extended",
+  },
+  {
+    id: "barbell-row",
+    name: "Barbell Row",
+    category: "Compound",
+    muscleGroups: ["Back", "Biceps"],
+    defaultEquipment: "barbell",
+  },
+  {
+    id: "bicep-curl",
+    name: "Bicep Curl",
+    category: "Isolation",
+    muscleGroups: ["Biceps"],
+    defaultEquipment: "dumbbell",
   },
   {
     id: "deadlift",
@@ -33,52 +56,15 @@ export const EXERCISE_LIBRARY: ExerciseTemplate[] = [
     category: "Compound",
     muscleGroups: ["Hamstrings", "Glutes", "Back"],
     defaultEquipment: "barbell",
-    instructions: "Stand with feet hip-width, grip bar just outside legs, lift by driving hips forward",
+    instructions:
+      "Stand with feet hip-width, grip bar just outside legs, lift by driving hips forward",
   },
   {
-    id: "rdl",
-    name: "Romanian Deadlift",
+    id: "dips",
+    name: "Dips",
     category: "Compound",
-    muscleGroups: ["Hamstrings", "Glutes"],
-    defaultEquipment: "barbell",
-  },
-  {
-    id: "leg-press",
-    name: "Leg Press",
-    category: "Compound",
-    muscleGroups: ["Quadriceps", "Glutes"],
-    defaultEquipment: "machine",
-  },
-  {
-    id: "lunges",
-    name: "Walking Lunges",
-    category: "Compound",
-    muscleGroups: ["Quadriceps", "Glutes"],
-    defaultEquipment: "dumbbell",
-  },
-
-  // Compound - Upper Body Push
-  {
-    id: "bench-press",
-    name: "Barbell Bench Press",
-    category: "Compound",
-    muscleGroups: ["Chest", "Triceps", "Shoulders"],
-    defaultEquipment: "barbell",
-    instructions: "Lower bar to chest, pause briefly, press up until arms are fully extended",
-  },
-  {
-    id: "overhead-press",
-    name: "Overhead Press",
-    category: "Compound",
-    muscleGroups: ["Shoulders", "Triceps"],
-    defaultEquipment: "barbell",
-  },
-  {
-    id: "incline-bench",
-    name: "Incline Bench Press",
-    category: "Compound",
-    muscleGroups: ["Chest", "Shoulders", "Triceps"],
-    defaultEquipment: "barbell",
+    muscleGroups: ["Triceps", "Chest"],
+    defaultEquipment: "bodyweight",
   },
   {
     id: "dumbbell-press",
@@ -88,56 +74,17 @@ export const EXERCISE_LIBRARY: ExerciseTemplate[] = [
     defaultEquipment: "dumbbell",
   },
   {
-    id: "dips",
-    name: "Dips",
+    id: "incline-bench",
+    name: "Incline Bench Press",
     category: "Compound",
-    muscleGroups: ["Triceps", "Chest"],
-    defaultEquipment: "bodyweight",
-  },
-
-  // Compound - Upper Body Pull
-  {
-    id: "barbell-row",
-    name: "Barbell Row",
-    category: "Compound",
-    muscleGroups: ["Back", "Biceps"],
+    muscleGroups: ["Chest", "Shoulders", "Triceps"],
     defaultEquipment: "barbell",
-  },
-  {
-    id: "pull-ups",
-    name: "Pull-ups",
-    category: "Compound",
-    muscleGroups: ["Back", "Biceps"],
-    defaultEquipment: "bodyweight",
   },
   {
     id: "lat-pulldown",
     name: "Lat Pulldown",
     category: "Compound",
     muscleGroups: ["Back", "Biceps"],
-    defaultEquipment: "cable",
-  },
-  {
-    id: "t-bar-row",
-    name: "T-Bar Row",
-    category: "Compound",
-    muscleGroups: ["Back", "Biceps"],
-    defaultEquipment: "landmine",
-  },
-
-  // Isolation
-  {
-    id: "bicep-curl",
-    name: "Bicep Curl",
-    category: "Isolation",
-    muscleGroups: ["Biceps"],
-    defaultEquipment: "dumbbell",
-  },
-  {
-    id: "tricep-extension",
-    name: "Tricep Extension",
-    category: "Isolation",
-    muscleGroups: ["Triceps"],
     defaultEquipment: "cable",
   },
   {
@@ -161,6 +108,55 @@ export const EXERCISE_LIBRARY: ExerciseTemplate[] = [
     muscleGroups: ["Quadriceps"],
     defaultEquipment: "machine",
   },
+  {
+    id: "leg-press",
+    name: "Leg Press",
+    category: "Compound",
+    muscleGroups: ["Quadriceps", "Glutes"],
+    defaultEquipment: "machine",
+  },
+  {
+    id: "overhead-press",
+    name: "Overhead Press",
+    category: "Compound",
+    muscleGroups: ["Shoulders", "Triceps"],
+    defaultEquipment: "barbell",
+  },
+  {
+    id: "pull-ups",
+    name: "Pull-ups",
+    category: "Compound",
+    muscleGroups: ["Back", "Biceps"],
+    defaultEquipment: "bodyweight",
+  },
+  {
+    id: "rdl",
+    name: "Romanian Deadlift",
+    category: "Compound",
+    muscleGroups: ["Hamstrings", "Glutes"],
+    defaultEquipment: "barbell",
+  },
+  {
+    id: "t-bar-row",
+    name: "T-Bar Row",
+    category: "Compound",
+    muscleGroups: ["Back", "Biceps"],
+    defaultEquipment: "landmine",
+  },
+  {
+    id: "tricep-extension",
+    name: "Tricep Extension",
+    category: "Isolation",
+    muscleGroups: ["Triceps"],
+    defaultEquipment: "cable",
+  },
+  {
+    id: "lunges",
+    name: "Walking Lunges",
+    category: "Compound",
+    muscleGroups: ["Quadriceps", "Glutes"],
+    defaultEquipment: "dumbbell",
+  },
 ];
 
 /**
@@ -176,4 +172,3 @@ export function findExerciseById(id: string): ExerciseTemplate | undefined {
 export function getExercisesByCategory(category: string): ExerciseTemplate[] {
   return EXERCISE_LIBRARY.filter((exercise) => exercise.category === category);
 }
-

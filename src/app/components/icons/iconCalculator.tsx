@@ -2,20 +2,22 @@ import type { IconProps } from "./IconBase";
 
 export default function IconCalculator({
   className,
-  size,
+  width,
+  height,
   color,
   "aria-label": ariaLabel,
   "aria-hidden": ariaHidden = true,
 }: IconProps) {
   return (
     <svg
-      {...(size && { width: size, height: size })}
-      viewBox="0 0 256 256"
-      fill={color || "currentColor"}
-      {...(className && { className })}
+      {...(width && { width })}
+      {...(height && { height })}
       {...(ariaLabel && { "aria-label": ariaLabel })}
       {...(ariaHidden !== undefined && { "aria-hidden": ariaHidden })}
+      {...(className && { className })}
       xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 256 256"
+      fill={color || "currentColor"}
     >
       <path d="M213,63.8h-42c-3,0-5.5,2.5-5.5,5.5s2.5,5.5,5.5,5.5h42c3,0,5.5-2.5,5.5-5.5s-2.5-5.5-5.5-5.5Z" />
       <path d="M85,63.8h-15.5v-15.5c0-3-2.5-5.5-5.5-5.5s-5.5,2.5-5.5,5.5v15.5h-15.5c-3,0-5.5,2.5-5.5,5.5s2.5,5.5,5.5,5.5h15.5v15.5c0,3,2.5,5.5,5.5,5.5s5.5-2.5,5.5-5.5v-15.5h15.5c3,0,5.5-2.5,5.5-5.5s-2.5-5.5-5.5-5.5Z" />

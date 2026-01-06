@@ -32,6 +32,7 @@ export default function WorkoutAddExercise() {
       equipmentType: exerciseTemplate.defaultEquipment,
       series: (selectedSeries || "A") as Series, // Use selected series or default to "A"
       instructions: exerciseTemplate.instructions,
+      notes: exerciseTemplate.notes,
     });
 
     // Reset selections

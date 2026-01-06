@@ -9,4 +9,10 @@
   display: grid;
   grid-template-columns: 1fr;
   row-gap: 1rem;
+  min-height: calc(100vh - $theme-header-height);
+}
+
+.main--login {
+  align-items: center;
+  justify-content: center;
 }

@@ -1,0 +1,16 @@
+.login {
+  text-align: center;
+  &__container {
+    row-gap: 1.5rem;
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+.login__title,
+.login__content {
+  grid-column: 1 / -1;
+}

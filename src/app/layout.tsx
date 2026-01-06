@@ -117,7 +117,7 @@ export default function RootLayout({
               <Footer />
               <DrawerMenu />
               <DrawerCalculator />
-              <DebugAuth />
+              <DebugAuth enabled={false} />
             </DrawerProvider>
           </CalculatorProvider>
         </AuthProvider>

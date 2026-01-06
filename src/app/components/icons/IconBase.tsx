@@ -1,7 +1,8 @@
 // Base props that all icons can use
 export type IconProps = {
   className?: string;
-  size?: number; // Optional - use CSS for sizing if not provided
+  width?: number;
+  height?: number;
   color?: string;
   "aria-label"?: string;
   "aria-hidden"?: boolean;

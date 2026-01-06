@@ -5,6 +5,7 @@ import { Series } from "@/app/types/workout";
 import { SERIES_OPTIONS } from "@/app/constants/workout";
 import { useWorkout } from "@/app/contexts/WorkoutContext";
 import WorkoutSet from "./WorkoutSet";
+import IconTrash from "../icons/IconTrash";
 
 type WorkoutExerciseProps = {
   exerciseProps: Exercise;
@@ -13,7 +14,7 @@ type WorkoutExerciseProps = {
 export default function WorkoutExercise({
   exerciseProps,
 }: WorkoutExerciseProps) {
-  const { addSet, updateExercise, workout } = useWorkout();
+  const { addSet, removeExercise, updateExercise, workout } = useWorkout();
   const blockName = "exercise";
   const blockClasses = [blockName];
   const showWeightPerSide =
@@ -47,6 +48,10 @@ export default function WorkoutExercise({
     updateExercise(exerciseProps.id, { series: newSeries });
   };
 
+  const handleRemoveExercise = () => {
+    removeExercise(exerciseProps.id);
+  };
+
   return (
     <div
       className={blockClasses.join(" ")}
@@ -57,6 +62,11 @@ export default function WorkoutExercise({
       <div className="exercise__header">
         <strong className="exercise__name text text--h3">
           {exerciseProps.name}
+          {exerciseProps.notes && (
+            <span className="exercise__notes text text--rte">
+              {exerciseProps.notes}
+            </span>
+          )}
         </strong>
         <select
           className="exercise__series-select select select--pill-outline"
@@ -107,12 +117,20 @@ export default function WorkoutExercise({
           ))}
         </div>
       </div>
-      <button
-        className="exercise__button-add-set button button--pill button--highlight-green button--add-set"
-        onClick={handleAddSet}
-      >
-        Add Set
-      </button>
+      <div className="exercise__controls">
+        <button
+          className="exercise__button-remove-exercise button button--pill-circle button--error"
+          onClick={handleRemoveExercise}
+        >
+          <IconTrash />
+        </button>
+        <button
+          className="exercise__button-add-set button button--pill button--highlight-green button--add-set"
+          onClick={handleAddSet}
+        >
+          Add Set
+        </button>
+      </div>
     </div>
   );
 }

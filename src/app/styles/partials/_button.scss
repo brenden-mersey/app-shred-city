@@ -49,6 +49,23 @@
   }
 }
 
+.button--pill-circle {
+  @extend %rounded-circle;
+  width: $button-height;
+  height: $button-height;
+  border: 1px solid currentColor;
+  color: inherit;
+  &[disabled] {
+    opacity: 0.33;
+    cursor: not-allowed;
+  }
+  svg {
+    display: block;
+    height: 100%;
+    width: auto;
+  }
+}
+
 .button--pill {
   @extend %rounded-pill;
   height: $button-height;
@@ -75,7 +92,6 @@
   }
 }
 
-.button--add-set,
 .button--start-workout {
   @extend %rounded-lg;
   align-items: center;

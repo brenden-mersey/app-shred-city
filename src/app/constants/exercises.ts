@@ -190,7 +190,7 @@ export const EXERCISE_LIBRARY: ExerciseTemplate[] = [
     id: "pull-ups-pronated-grip",
     name: "Pull-ups (Pronated Grip)",
     notes:
-      "Pronated grip is the grip where the palms are facing away from the body.",
+      "Grip slightly wider than shoulder-width for a stronger grip. Palms should be facing away from the body.",
     category: "Compound",
     muscleGroups: ["Back", "Biceps"],
     defaultEquipment: "bodyweight",

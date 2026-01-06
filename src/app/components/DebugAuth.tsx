@@ -8,7 +8,11 @@ import { useEffect, useState } from "react";
  * Debug component to help troubleshoot auth issues
  * Remove this in production!
  */
-export default function DebugAuth() {
+export default function DebugAuth({ enabled }: { enabled: boolean }) {
+  if (!enabled) {
+    return null;
+  }
+
   const { user, loading } = useAuth();
   const [sessionInfo, setSessionInfo] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);

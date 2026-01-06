@@ -39,14 +39,15 @@ $container-grid-columns: (
 $theme-colours: (
   dark-primary: #171717,
   dark-secondary: #202020,
-  light-primary: #ffffff,
-  light-secondary: #f0f0f0,
+  error: #e06b6b,
   highlight-green: #c8ef7a,
   highlight-blue: #56cbf9,
   highlight-orange: #f3a738,
   highlight-pink: #ff729f,
   highlight-yellow: #fdd835,
   highlight-purple: #ce93d8,
+  light-primary: #ffffff,
+  light-secondary: #f0f0f0,
 );
 
 $theme-header-height: 54px;

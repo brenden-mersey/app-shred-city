@@ -5,10 +5,15 @@ export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
   const supabase = await createClient();
 
+  // Use NEXT_PUBLIC_SITE_URL if set, otherwise use the request origin
+  // This ensures production uses the correct domain
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || requestUrl.origin;
+  const redirectTo = `${siteUrl}/auth/callback`;
+
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${requestUrl.origin}/auth/callback`,
+      redirectTo,
     },
   });
 
@@ -31,4 +36,3 @@ export async function GET(request: Request) {
     status: 301,
   });
 }
-

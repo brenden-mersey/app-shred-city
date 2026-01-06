@@ -2,10 +2,12 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { CalculatorProvider } from "./contexts/CalculatorContext";
 import { DrawerProvider } from "./contexts/DrawerContext";
+import { AuthProvider } from "./contexts/AuthContext";
 import DrawerMenu from "./components/layout/DrawerMenu";
 import DrawerCalculator from "./components/layout/DrawerCalculator";
 import Footer from "./components/layout/Footer";
 import Header from "./components/layout/Header";
+import DebugAuth from "./components/DebugAuth";
 import "./styles/main.scss";
 
 const geistSans = Geist({
@@ -101,21 +103,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://rsms.me/" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <CalculatorProvider>
-          <DrawerProvider>
-            <Header />
-            {children}
-            <Footer />
-            <DrawerMenu />
-            <DrawerCalculator />
-          </DrawerProvider>
-        </CalculatorProvider>
+        <AuthProvider>
+          <CalculatorProvider>
+            <DrawerProvider>
+              <Header />
+              {children}
+              <Footer />
+              <DrawerMenu />
+              <DrawerCalculator />
+              <DebugAuth />
+            </DrawerProvider>
+          </CalculatorProvider>
+        </AuthProvider>
       </body>
     </html>
   );

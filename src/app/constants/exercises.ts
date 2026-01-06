@@ -11,6 +11,7 @@ export type ExerciseTemplate = {
   muscleGroups: string[];
   defaultEquipment: EquipmentType;
   instructions?: string;
+  notes?: string;
 };
 
 /**
@@ -19,8 +20,8 @@ export type ExerciseTemplate = {
  */
 export const EXERCISE_LIBRARY: ExerciseTemplate[] = [
   {
-    id: "squat",
-    name: "Barbell Back Squat",
+    id: "back-squat",
+    name: "Back Squat",
     category: "Compound",
     muscleGroups: ["Quadriceps", "Glutes", "Hamstrings"],
     defaultEquipment: "barbell",
@@ -28,13 +29,76 @@ export const EXERCISE_LIBRARY: ExerciseTemplate[] = [
       "Place barbell on upper back, descend until thighs are parallel to floor, drive up through heels",
   },
   {
+    id: "goblet-squat-dumbbell",
+    name: "Goblet Squat (Dumbbell)",
+    category: "Compound",
+    muscleGroups: ["Quadriceps", "Glutes", "Hamstrings"],
+    defaultEquipment: "dumbbell",
+    instructions:
+      "Place dumbbells at sides, descend until thighs are parallel to floor, drive up through heels",
+  },
+  {
+    id: "goblet-squat-kettlebell",
+    name: "Goblet Squat (Kettlebell)",
+    category: "Compound",
+    muscleGroups: ["Quadriceps", "Glutes", "Hamstrings"],
+    defaultEquipment: "kettlebell",
+    instructions:
+      "Place barbell on upper back, descend until thighs are parallel to floor, drive up through heels",
+  },
+  {
     id: "bench-press",
-    name: "Barbell Bench Press",
+    name: "Bench Press (Barbell)",
     category: "Compound",
     muscleGroups: ["Chest", "Triceps", "Shoulders"],
     defaultEquipment: "barbell",
     instructions:
       "Lower bar to chest, pause briefly, press up until arms are fully extended",
+  },
+  {
+    id: "bench-press-incline",
+    name: "Bench Press (Barbell, Incline)",
+    category: "Compound",
+    muscleGroups: ["Chest", "Triceps", "Shoulders"],
+    defaultEquipment: "barbell",
+    instructions:
+      "Lower bar to chest, pause briefly, press up until arms are fully extended",
+  },
+  {
+    id: "bench-press-decline",
+    name: "Bench Press (Barbell, Decline)",
+    category: "Compound",
+    muscleGroups: ["Chest", "Triceps", "Shoulders"],
+    defaultEquipment: "barbell",
+    instructions:
+      "Lower bar to chest, pause briefly, press up until arms are fully extended",
+  },
+  {
+    id: "bench-press-dumbbell",
+    name: "Bench Press (Dumbbell)",
+    category: "Compound",
+    muscleGroups: ["Chest", "Triceps", "Shoulders"],
+    defaultEquipment: "dumbbell",
+    instructions:
+      "Lower dumbbells to chest, pause briefly, press up until arms are fully extended",
+  },
+  {
+    id: "bench-press-dumbbell-incline",
+    name: "Bench Press (Dumbbell, Incline)",
+    category: "Compound",
+    muscleGroups: ["Chest", "Triceps", "Shoulders"],
+    defaultEquipment: "dumbbell",
+    instructions:
+      "Lower dumbbells to chest, pause briefly, press up until arms are fully extended",
+  },
+  {
+    id: "bench-press-dumbbell-decline",
+    name: "Bench Press (Dumbbell, Decline)",
+    category: "Compound",
+    muscleGroups: ["Chest", "Triceps", "Shoulders"],
+    defaultEquipment: "dumbbell",
+    instructions:
+      "Lower dumbbells to chest, pause briefly, press up until arms are fully extended",
   },
   {
     id: "barbell-row",
@@ -123,8 +187,27 @@ export const EXERCISE_LIBRARY: ExerciseTemplate[] = [
     defaultEquipment: "barbell",
   },
   {
-    id: "pull-ups",
-    name: "Pull-ups",
+    id: "pull-ups-pronated-grip",
+    name: "Pull-ups (Pronated Grip)",
+    notes:
+      "Pronated grip is the grip where the palms are facing away from the body.",
+    category: "Compound",
+    muscleGroups: ["Back", "Biceps"],
+    defaultEquipment: "bodyweight",
+  },
+  {
+    id: "pull-ups-supinated-grip",
+    name: "Pull-ups (Supinated Grip)",
+    notes:
+      "Supinated grip is the grip where the palms are facing towards from the body.",
+    category: "Compound",
+    muscleGroups: ["Back", "Biceps"],
+    defaultEquipment: "bodyweight",
+  },
+  {
+    id: "pull-ups-neutral-grip",
+    name: "Pull-ups (Neutral Grip)",
+    notes: "Neutral grip is the grip where the palms are facing each other.",
     category: "Compound",
     muscleGroups: ["Back", "Biceps"],
     defaultEquipment: "bodyweight",

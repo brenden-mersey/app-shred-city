@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useDrawer } from "../../contexts/DrawerContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 type DrawerProps = {
   children?: React.ReactNode;
@@ -9,6 +10,7 @@ type DrawerProps = {
 
 export default function DrawerMenu({ children }: DrawerProps) {
   const { menuIsOpen, closeMenu, closeAllDrawers } = useDrawer();
+  const { user, signOut } = useAuth();
   const drawerClass = "drawer-menu";
   const classes = `${drawerClass} ${
     menuIsOpen ? `${drawerClass}--open` : `${drawerClass}--closed`
@@ -56,16 +58,38 @@ export default function DrawerMenu({ children }: DrawerProps) {
     };
   }, [menuIsOpen, closeMenu, closeAllDrawers, bodyClasses]);
 
+  const handleLogout = async () => {
+    await signOut();
+    closeMenu();
+    window.location.href = "/login";
+  };
+
   return (
     <aside className={classes}>
       <div className={`${drawerClass}__content`}>
-        <span className={`${drawerClass}__content-welcome`}>John Doe</span>
-        <nav className={`${drawerClass}__nav`}>
-          <div className={`${drawerClass}__nav-item`}>Workouts</div>
-          <div className={`${drawerClass}__nav-item`}>Account</div>
-          <div className={`${drawerClass}__nav-item`}>Contact</div>
-          <div className={`${drawerClass}__nav-item`}>Logout</div>
-        </nav>
+        {user ? (
+          <>
+            <span className={`${drawerClass}__content-welcome`}>
+              {user.email}
+            </span>
+            <nav className={`${drawerClass}__nav`}>
+              <div className={`${drawerClass}__nav-item`}>Workouts</div>
+              <div className={`${drawerClass}__nav-item`}>Account</div>
+              <div className={`${drawerClass}__nav-item`}>Contact</div>
+              <div
+                className={`${drawerClass}__nav-item`}
+                onClick={handleLogout}
+                style={{ cursor: "pointer" }}
+              >
+                Logout
+              </div>
+            </nav>
+          </>
+        ) : (
+          <span className={`${drawerClass}__content-welcome`}>
+            Not logged in
+          </span>
+        )}
       </div>
     </aside>
   );

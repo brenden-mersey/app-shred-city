@@ -15,7 +15,7 @@ export default function DebugAuth() {
 
   useEffect(() => {
     const supabase = createClient();
-    
+
     // Get session info
     supabase.auth.getSession().then(({ data, error }) => {
       if (error) {
@@ -56,7 +56,7 @@ export default function DebugAuth() {
         borderRadius: "0.5rem",
         fontSize: "0.75rem",
         maxWidth: "300px",
-        zIndex: 10000,
+        zIndex: 500,
         border: "1px solid #333",
       }}
     >
@@ -91,4 +91,3 @@ export default function DebugAuth() {
     </div>
   );
 }
-

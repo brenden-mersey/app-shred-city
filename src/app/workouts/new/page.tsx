@@ -12,6 +12,7 @@ function createNewWorkout(hasPreviousData: boolean = false): WorkoutSession {
     exercises: [],
     startTime: new Date(),
     hasPreviousData,
+    defaultWeightUnit: "lbs", // Default to lbs, can be made configurable later
   };
 }
 

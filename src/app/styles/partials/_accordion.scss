@@ -1,0 +1,115 @@
+@use "../extensions/rounded-corners" as *;
+@use "../extensions/padding" as *;
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+
+  &__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    color: var(--light-primary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--highlight-green);
+      outline-offset: 2px;
+    }
+  }
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1;
+    transition: transform 0.2s ease;
+  }
+
+  &--open &__icon {
+    transform: rotate(0deg);
+  }
+
+  &--closed &__icon {
+    transform: rotate(0deg);
+  }
+
+  &__content {
+    transition: height 0.25s ease;
+    will-change: height;
+  }
+
+  &__content-inner {
+    padding: 1rem 0 0;
+  }
+
+  // Modifier for compact style
+  &--compact {
+    .accordion__trigger {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8125rem;
+    }
+
+    .accordion__content-inner {
+      padding: 0.75rem 0 0;
+    }
+  }
+
+  // Modifier for bordered style
+  &--bordered {
+    .accordion__trigger {
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .accordion__content-inner {
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-top: none;
+      border-radius: 0 0 0.5rem 0.5rem;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    &.accordion--open .accordion__trigger {
+      border-radius: 0.5rem 0.5rem 0 0;
+      border-bottom-color: transparent;
+    }
+  }
+
+  // Modifier for flush style (no borders)
+  &--flush {
+    .accordion__trigger {
+      border: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .accordion__content-inner {
+      padding: 0.75rem 0 0;
+    }
+  }
+}

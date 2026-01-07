@@ -5,6 +5,11 @@
 export type Series = "A" | "B" | "C" | "D" | "E";
 
 /**
+ * Weight unit of measurement
+ */
+export type WeightUnit = "lbs" | "kg";
+
+/**
  * Equipment types supported in workouts
  */
 export type EquipmentType =
@@ -53,6 +58,8 @@ export type Set = {
   weightPerSide: WeightPerSide;
   /** Total weight in pounds/kilograms (automatically calculated, stored for calculations) */
   totalWeight: number;
+  /** The unit this weight was ENTERED in (preserves user intent) */
+  weightUnit: WeightUnit;
   /** Equipment type used for this set */
   equipmentType: EquipmentType;
   /** Number of reps performed */
@@ -65,6 +72,8 @@ export type Set = {
   previousWeight?: number;
   /** Previous reps from template/existing workout (for comparison) */
   previousReps?: number;
+  /** Unit of previous weight for accurate comparison */
+  previousWeightUnit?: WeightUnit;
 };
 
 /**
@@ -92,6 +101,10 @@ export type Exercise = {
   instructions?: string;
   /** Notes specific to this exercise instance */
   notes?: string;
+  /** Override weight unit for this specific exercise (optional) */
+  weightUnit?: WeightUnit;
+  /** Custom bar weight for this exercise (optional, follows weightUnit) */
+  barWeight?: number;
 };
 
 /**
@@ -116,4 +129,6 @@ export type WorkoutSession = {
   startTime: Date;
   /** Timestamp when workout ended */
   endTime?: Date;
+  /** Default weight unit for this workout (user's preference at time of creation) */
+  defaultWeightUnit: WeightUnit;
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Set as SetType, EquipmentType } from "@/app/types/workout";
+import { Set as SetType, EquipmentType, WeightUnit } from "@/app/types/workout";
 import { useWorkout } from "@/app/contexts/WorkoutContext";
 import ButtonClose from "../ui/ButtonClose";
 
@@ -9,6 +9,7 @@ type WorkoutSetProps = {
   set: SetType;
   index: number;
   exerciseId: string;
+  displayUnit: WeightUnit;
 };
 
 /**
@@ -70,12 +71,16 @@ export default function WorkoutSet({
   set,
   index,
   exerciseId,
+  displayUnit,
 }: WorkoutSetProps) {
   const { updateSet, removeSet, workout } = useWorkout();
   const showWeightPerSide =
     set.equipmentType === "barbell" || set.equipmentType === "trap-bar";
   const showPreviousValues = workout.hasPreviousData ?? false;
   const setNumber = index + 1;
+  
+  // Determine step size based on unit (lbs: 0.5, kg: 0.25)
+  const weightStep = displayUnit === "lbs" ? 0.5 : 0.25;
 
   // Local state for inputs (controlled components)
   const [totalWeight, setTotalWeight] = useState(set.totalWeight || 0);
@@ -160,7 +165,7 @@ export default function WorkoutSet({
             type="number"
             name="weight-per-side"
             min={0}
-            step={0.5}
+            step={weightStep}
             value={weightPerSide || ""}
             onChange={(e) =>
               handleWeightPerSideChange(parseFloat(e.target.value) || 0)
@@ -173,7 +178,7 @@ export default function WorkoutSet({
           type="number"
           name="weight"
           min={0}
-          step={0.5}
+          step={weightStep}
           value={showWeightPerSide ? totalWeight || "" : weightPerSide || ""}
           onChange={(e) => {
             const value = parseFloat(e.target.value) || 0;

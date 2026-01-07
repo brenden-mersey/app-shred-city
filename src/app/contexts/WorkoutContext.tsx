@@ -6,7 +6,9 @@ import {
   Exercise,
   Series,
   EquipmentType,
+  WeightUnit,
 } from "@/app/types/workout";
+import { calculateTotalWeight as calculateTotalWeightUtil } from "@/app/utils/workouts/weights";
 
 type WorkoutContextType = {
   // Current workout session
@@ -22,7 +24,7 @@ type WorkoutContextType = {
     exerciseId: string,
     set: Omit<
       Exercise["sets"][0],
-      "id" | "timestamp" | "setNumber" | "totalWeight"
+      "id" | "timestamp" | "setNumber" | "totalWeight" | "weightUnit"
     >
   ) => void;
   removeSet: (exerciseId: string, setId: string) => void;
@@ -31,6 +33,9 @@ type WorkoutContextType = {
     setId: string,
     updates: Partial<Exercise["sets"][0]>
   ) => void;
+
+  // Weight unit management
+  toggleExerciseWeightUnit: (exerciseId: string) => void;
 
   // Workout metadata
   updateWorkoutNotes: (notes: string) => void;
@@ -41,7 +46,8 @@ const WorkoutContext = createContext<WorkoutContextType | undefined>(undefined);
 
 /**
  * Calculate total weight based on weight per side and equipment type
- * Bar weight defaults to 45lbs for barbell/trap-bar/landmine
+ * @deprecated Use calculateTotalWeightUtil from weights.ts instead
+ * Kept for backward compatibility during migration
  */
 function calculateTotalWeight(
   weightPerSide: number,
@@ -80,11 +86,20 @@ export function WorkoutProvider({
   const addExercise = (exerciseData: Omit<Exercise, "id" | "sets">) => {
     const exerciseId = crypto.randomUUID();
 
+    // Use exercise's weight unit, or workout's default
+    const weightUnit = exerciseData.weightUnit || workout.defaultWeightUnit;
+
     // Create a default set for the new exercise
     const defaultSet: Exercise["sets"][0] = {
       id: crypto.randomUUID(),
       weightPerSide: 0,
-      totalWeight: calculateTotalWeight(0, exerciseData.equipmentType),
+      totalWeight: calculateTotalWeightUtil(
+        0,
+        exerciseData.equipmentType,
+        weightUnit,
+        exerciseData.barWeight
+      ),
+      weightUnit,
       equipmentType: exerciseData.equipmentType,
       reps: 0,
       setNumber: 1,
@@ -126,7 +141,7 @@ export function WorkoutProvider({
     exerciseId: string,
     setData: Omit<
       Exercise["sets"][0],
-      "id" | "timestamp" | "setNumber" | "totalWeight"
+      "id" | "timestamp" | "setNumber" | "totalWeight" | "weightUnit"
     >
   ) => {
     setWorkout((prev) => ({
@@ -135,9 +150,15 @@ export function WorkoutProvider({
         if (ex.id !== exerciseId) return ex;
 
         const newSetNumber = ex.sets.length + 1;
-        const totalWeight = calculateTotalWeight(
+
+        // Use exercise's weight unit, or workout's default
+        const weightUnit = ex.weightUnit || prev.defaultWeightUnit;
+
+        const totalWeight = calculateTotalWeightUtil(
           setData.weightPerSide,
-          setData.equipmentType
+          setData.equipmentType,
+          weightUnit,
+          ex.barWeight
         );
 
         const newSet: Exercise["sets"][0] = {
@@ -146,6 +167,7 @@ export function WorkoutProvider({
           timestamp: new Date(),
           setNumber: newSetNumber,
           totalWeight,
+          weightUnit,
         };
 
         return {
@@ -194,19 +216,23 @@ export function WorkoutProvider({
           sets: ex.sets.map((set) => {
             if (set.id !== setId) return set;
 
-            // Recalculate totalWeight if weightPerSide or equipmentType changed
+            // Recalculate totalWeight if weightPerSide, equipmentType, or weightUnit changed
             let totalWeight = set.totalWeight;
             if (
               updates.weightPerSide !== undefined ||
-              updates.equipmentType !== undefined
+              updates.equipmentType !== undefined ||
+              updates.weightUnit !== undefined
             ) {
               const newWeightPerSide =
                 updates.weightPerSide ?? set.weightPerSide;
               const newEquipmentType =
                 updates.equipmentType ?? set.equipmentType;
-              totalWeight = calculateTotalWeight(
+              const newWeightUnit = updates.weightUnit ?? set.weightUnit;
+              totalWeight = calculateTotalWeightUtil(
                 newWeightPerSide,
-                newEquipmentType
+                newEquipmentType,
+                newWeightUnit,
+                ex.barWeight
               );
             }
 
@@ -227,6 +253,40 @@ export function WorkoutProvider({
       ...prev,
       notes,
     }));
+  };
+
+  // Toggle weight unit for a specific exercise
+  const toggleExerciseWeightUnit = (exerciseId: string) => {
+    setWorkout((prev) => {
+      const exercise = prev.exercises.find((ex) => ex.id === exerciseId);
+      if (!exercise) return prev;
+
+      const currentUnit = exercise.weightUnit || prev.defaultWeightUnit;
+      const newUnit: WeightUnit = currentUnit === "lbs" ? "kg" : "lbs";
+
+      return {
+        ...prev,
+        exercises: prev.exercises.map((ex) => {
+          if (ex.id !== exerciseId) return ex;
+
+          return {
+            ...ex,
+            weightUnit: newUnit,
+            // Update all sets in this exercise to use the new unit
+            sets: ex.sets.map((set) => ({
+              ...set,
+              weightUnit: newUnit,
+              totalWeight: calculateTotalWeightUtil(
+                set.weightPerSide,
+                set.equipmentType,
+                newUnit,
+                ex.barWeight
+              ),
+            })),
+          };
+        }),
+      };
+    });
   };
 
   // End the workout (set endTime and calculate duration)
@@ -251,6 +311,7 @@ export function WorkoutProvider({
     addSet,
     removeSet,
     updateSet,
+    toggleExerciseWeightUnit,
     updateWorkoutNotes,
     endWorkout,
   };

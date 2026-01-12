@@ -56,11 +56,6 @@
     transform: rotate(0deg);
   }
 
-  &__content {
-    transition: height 0.25s ease;
-    will-change: height;
-  }
-
   &__content-inner {
     padding: 1rem 0 0;
   }

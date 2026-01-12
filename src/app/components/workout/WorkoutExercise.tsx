@@ -13,7 +13,7 @@ import WorkoutSet from "./WorkoutSet";
 import IconTrash from "../icons/IconTrash";
 import IconCog from "../icons/IconCog";
 import Accordion from "../ui/Accordion";
-import WeightUnitToggle from "../ui/WeightUnitToggle";
+import RadioGroup from "../ui/RadioGroup";
 
 type WorkoutExerciseProps = {
   exerciseProps: Exercise;
@@ -77,8 +77,11 @@ export default function WorkoutExercise({
     removeExercise(exerciseProps.id);
   };
 
-  const handleToggleUnit = () => {
-    toggleExerciseWeightUnit(exerciseProps.id);
+  const handleUnitChange = (newUnit: WeightUnit) => {
+    // Only toggle if the unit is actually different
+    if (newUnit !== exerciseUnit) {
+      toggleExerciseWeightUnit(exerciseProps.id);
+    }
   };
 
   const handleBarWeightChange = (value: number) => {
@@ -102,34 +105,34 @@ export default function WorkoutExercise({
               </span>
             )}
           </strong>
-          <Accordion.Trigger className="exercise__settings-button button button--pill-outline">
-            <IconCog width={18} height={18} />
+          <Accordion.Trigger className="exercise__button-settings button">
+            <IconCog height={18} />
           </Accordion.Trigger>
         </div>
 
         <Accordion.Content className="exercise__settings-wrapper">
           <div className="exercise__settings">
             <div className="exercise__setting">
-              <label className="exercise__setting-label">Series</label>
-              <select
-                className="exercise__series-select select select--pill-outline"
+              <RadioGroup
+                name={`series-${exerciseProps.id}`}
+                label="Series"
+                options={SERIES_OPTIONS}
                 value={exerciseProps.series}
-                onChange={(e) => handleSeriesChange(e.target.value as Series)}
-                aria-label="Exercise series"
-              >
-                {SERIES_OPTIONS.map((series) => (
-                  <option key={series} value={series}>
-                    {series}
-                  </option>
-                ))}
-              </select>
+                onChange={handleSeriesChange}
+                variant="text"
+                size="sm"
+              />
             </div>
 
             <div className="exercise__setting">
-              <WeightUnitToggle
-                unit={exerciseUnit}
-                onToggle={handleToggleUnit}
+              <RadioGroup
+                name={`weight-unit-${exerciseProps.id}`}
                 label="Weight Unit"
+                options={["lbs", "kg"]}
+                value={exerciseUnit}
+                onChange={handleUnitChange}
+                variant="text"
+                size="sm"
               />
             </div>
 
@@ -192,13 +195,13 @@ export default function WorkoutExercise({
         </div>
         <div className="exercise__controls">
           <button
-            className="exercise__button-remove-exercise button button--pill-circle button--error"
+            className="exercise__button-remove-exercise button"
             onClick={handleRemoveExercise}
           >
-            <IconTrash />
+            <IconTrash height={18} />
           </button>
           <button
-            className="exercise__button-add-set button button--pill button--highlight-green button--add-set"
+            className="exercise__button-add-set button button--pill button--add-set"
             onClick={handleAddSet}
           >
             Add Set

@@ -1,0 +1,72 @@
+@use "sass:map";
+@use "../variables" as *;
+@use "../extensions/padding" as *;
+@use "../extensions/rounded-corners" as *;
+@use "../mixins/breakpoints" as *;
+@use "../mixins/buttons" as *;
+
+.radio-group {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+
+  input {
+    display: none;
+    &:focus + .radio-group__option-label,
+    &:hover + .radio-group__option-label {
+      background: var(--dark-secondary);
+    }
+    &:checked + .radio-group__option-label {
+      background: var(--light-primary);
+      color: var(--dark-primary);
+      font-weight: 600;
+    }
+  }
+
+  &__label {
+    flex: 0 1 auto;
+    font-weight: 500;
+  }
+
+  &__option-label {
+    border-radius: 8px;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    padding: 0.5rem 0;
+    transition: all 0.15s ease-in-out;
+    font-weight: 400;
+  }
+
+  &__option {
+    flex: 1 0 auto;
+    font-weight: 600;
+  }
+
+  &__options {
+    height: $button-height;
+    background: var(--dark-primary);
+    color: var(--light-secondary);
+    border: 1px solid #ffffff1a;
+    border-radius: 12px;
+    flex: 1 1 auto;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0.25rem;
+    width: 100%;
+    gap: 0.15rem;
+  }
+}
+
+@include bp-min-width(lg) {
+  .radio-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

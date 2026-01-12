@@ -8,6 +8,7 @@ import {
   createContext,
   useContext,
 } from "react";
+import { gsap } from "gsap";
 
 // Context for compound components
 type AccordionContextType = {
@@ -16,7 +17,6 @@ type AccordionContextType = {
   contentId: string;
   triggerId: string;
   contentRef: React.RefObject<HTMLDivElement | null>;
-  contentHeight: number | "auto";
 };
 
 const AccordionContext = createContext<AccordionContextType | undefined>(
@@ -82,38 +82,48 @@ function AccordionRoot({
   const triggerId = `${idRef.current}-trigger`;
 
   const contentRef = useRef<HTMLDivElement>(null);
-  const [contentHeight, setContentHeight] = useState<number | "auto">(
-    isOpen ? "auto" : 0
-  );
 
-  // Animate height when open state changes (Bootstrap-style)
+  // GSAP animation when open state changes
   useEffect(() => {
-    if (contentRef.current) {
-      if (isOpen) {
-        // Opening: measure and animate to full height
-        const height = contentRef.current.scrollHeight;
-        setContentHeight(height);
-
-        // After animation completes, set to auto for dynamic content
-        const timer = setTimeout(() => {
-          setContentHeight("auto");
-        }, 250); // Match transition duration
-
-        return () => clearTimeout(timer);
-      } else {
-        // Closing: set current height, force reflow, then collapse
-        const currentHeight = contentRef.current.scrollHeight;
-        setContentHeight(currentHeight);
-
-        // Force reflow to ensure height is set before transition
-        void contentRef.current.offsetHeight;
-
-        // Collapse to 0
-        requestAnimationFrame(() => {
-          setContentHeight(0);
-        });
+    const ctx = gsap.context(() => {
+      if (contentRef.current) {
+        if (isOpen) {
+          // Opening animation
+          gsap.to(contentRef.current, {
+            onStart: () => {
+              contentRef.current?.classList.add("opening");
+              contentRef.current?.classList.remove("closing", "closed");
+            },
+            onComplete: () => {
+              contentRef.current?.classList.add("opened");
+              contentRef.current?.classList.remove("opening");
+            },
+            height: "auto",
+            duration: 0.333,
+            ease: "ease",
+            overwrite: true,
+          });
+        } else {
+          // Closing animation
+          gsap.to(contentRef.current, {
+            onStart: () => {
+              contentRef.current?.classList.add("closing");
+              contentRef.current?.classList.remove("opening", "opened");
+            },
+            onComplete: () => {
+              contentRef.current?.classList.remove("closing");
+              contentRef.current?.classList.add("closed");
+            },
+            height: 0,
+            duration: 0.333,
+            ease: "ease",
+            overwrite: true,
+          });
+        }
       }
-    }
+    });
+
+    return () => ctx.revert();
   }, [isOpen]);
 
   const toggle = () => {
@@ -133,7 +143,6 @@ function AccordionRoot({
         contentId,
         triggerId,
         contentRef,
-        contentHeight,
       }}
     >
       {children}
@@ -172,8 +181,7 @@ type AccordionContentProps = {
 };
 
 function AccordionContent({ children, className = "" }: AccordionContentProps) {
-  const { isOpen, contentId, triggerId, contentRef, contentHeight } =
-    useAccordionContext();
+  const { isOpen, contentId, triggerId, contentRef } = useAccordionContext();
 
   return (
     <div
@@ -185,8 +193,8 @@ function AccordionContent({ children, className = "" }: AccordionContentProps) {
       role="region"
       aria-labelledby={triggerId}
       style={{
-        height: contentHeight === "auto" ? "auto" : `${contentHeight}px`,
-        overflow: contentHeight === "auto" ? "visible" : "hidden",
+        height: 0,
+        overflow: "hidden",
       }}
     >
       <div className="accordion__content-inner">{children}</div>
@@ -222,40 +230,46 @@ function Accordion({
   const contentId = `${idRef.current}-content`;
   const triggerId = `${idRef.current}-trigger`;
 
-  // Content ref for smooth height animation
+  // Content ref for GSAP animation
   const contentRef = useRef<HTMLDivElement>(null);
-  const [contentHeight, setContentHeight] = useState<number | "auto">(
-    isOpen ? "auto" : 0
-  );
 
-  // Update height when open state changes (Bootstrap-style)
+  // GSAP animation when open state changes
   useEffect(() => {
-    if (contentRef.current) {
-      if (isOpen) {
-        // Opening: measure and animate to full height
-        const height = contentRef.current.scrollHeight;
-        setContentHeight(height);
-
-        // After animation completes, set to auto for dynamic content
-        const timer = setTimeout(() => {
-          setContentHeight("auto");
-        }, 250); // Match transition duration
-
-        return () => clearTimeout(timer);
-      } else {
-        // Closing: set current height, force reflow, then collapse
-        const currentHeight = contentRef.current.scrollHeight;
-        setContentHeight(currentHeight);
-
-        // Force reflow to ensure height is set before transition
-        void contentRef.current.offsetHeight;
-
-        // Collapse to 0
-        requestAnimationFrame(() => {
-          setContentHeight(0);
-        });
+    const ctx = gsap.context(() => {
+      if (contentRef.current) {
+        if (isOpen) {
+          // Opening animation
+          gsap.to(contentRef.current, {
+            onStart: () => {
+              contentRef.current?.classList.add("open");
+            },
+            onComplete: () => {
+              contentRef.current?.classList.add("opened");
+            },
+            height: "auto",
+            duration: 0.333,
+            ease: "ease",
+            overwrite: true,
+          });
+        } else {
+          // Closing animation
+          gsap.to(contentRef.current, {
+            onStart: () => {
+              contentRef.current?.classList.remove("open");
+            },
+            onComplete: () => {
+              contentRef.current?.classList.remove("opened");
+            },
+            height: 0,
+            duration: 0.333,
+            ease: "ease",
+            overwrite: true,
+          });
+        }
       }
-    }
+    });
+
+    return () => ctx.revert();
   }, [isOpen]);
 
   const handleToggle = () => {
@@ -298,8 +312,8 @@ function Accordion({
         role="region"
         aria-labelledby={triggerId}
         style={{
-          height: contentHeight === "auto" ? "auto" : `${contentHeight}px`,
-          overflow: contentHeight === "auto" ? "visible" : "hidden",
+          height: 0,
+          overflow: "hidden",
         }}
       >
         <div className={`${blockName}__content-inner`}>{children}</div>

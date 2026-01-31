@@ -10,16 +10,13 @@ type WorkoutSetProps = {
   index: number;
   exerciseId: string;
   displayUnit: WeightUnit;
+  barWeight: number;
 };
 
 /**
  * Calculate weight per side from total weight (reverse of calculateTotalWeight)
  */
-function calculateWeightPerSide(
-  totalWeight: number,
-  equipmentType: EquipmentType,
-  barWeight: number = 45
-): number {
+function calculateWeightPerSide(totalWeight: number, equipmentType: EquipmentType, barWeight: number = 45): number {
   switch (equipmentType) {
     case "barbell":
     case "trap-bar":
@@ -43,11 +40,7 @@ function calculateWeightPerSide(
 /**
  * Calculate total weight from weight per side (matches context function)
  */
-function calculateTotalWeight(
-  weightPerSide: number,
-  equipmentType: EquipmentType,
-  barWeight: number = 45
-): number {
+function calculateTotalWeight(weightPerSide: number, equipmentType: EquipmentType, barWeight: number = 45): number {
   switch (equipmentType) {
     case "barbell":
     case "trap-bar":
@@ -67,18 +60,12 @@ function calculateTotalWeight(
   }
 }
 
-export default function WorkoutSet({
-  set,
-  index,
-  exerciseId,
-  displayUnit,
-}: WorkoutSetProps) {
+export default function WorkoutSet({ set, index, exerciseId, displayUnit, barWeight }: WorkoutSetProps) {
   const { updateSet, removeSet, workout } = useWorkout();
-  const showWeightPerSide =
-    set.equipmentType === "barbell" || set.equipmentType === "trap-bar";
+  const showWeightPerSide = set.equipmentType === "barbell" || set.equipmentType === "trap-bar";
   const showPreviousValues = workout.hasPreviousData ?? false;
   const setNumber = index + 1;
-  
+
   // Determine step size based on unit (lbs: 0.5, kg: 0.25)
   const weightStep = displayUnit === "lbs" ? 0.5 : 0.25;
 
@@ -97,10 +84,7 @@ export default function WorkoutSet({
   const handleTotalWeightChange = (value: number) => {
     setTotalWeight(value);
     // Calculate weight per side from total weight
-    const calculatedWeightPerSide = calculateWeightPerSide(
-      value,
-      set.equipmentType
-    );
+    const calculatedWeightPerSide = calculateWeightPerSide(value, set.equipmentType, barWeight);
     setWeightPerSide(calculatedWeightPerSide);
 
     // Update the set in context
@@ -115,10 +99,7 @@ export default function WorkoutSet({
 
     // Only calculate total weight for barbell/trap-bar (where it's meaningful)
     if (showWeightPerSide) {
-      const calculatedTotalWeight = calculateTotalWeight(
-        value,
-        set.equipmentType
-      );
+      const calculatedTotalWeight = calculateTotalWeight(value, set.equipmentType, barWeight);
       setTotalWeight(calculatedTotalWeight);
 
       // Update the set in context
@@ -154,23 +135,12 @@ export default function WorkoutSet({
       </div>
       {showPreviousValues && (
         <div className="set-table__item previous-weight">
-          <span className="set__previous-weight-value">
-            {set.previousWeight ?? "--"}
-          </span>
+          <span className="set__previous-weight-value">{set.previousWeight ?? "--"}</span>
         </div>
       )}
       {showWeightPerSide && (
         <div className="set-table__item weight-per-side">
-          <input
-            type="number"
-            name="weight-per-side"
-            min={0}
-            step={weightStep}
-            value={weightPerSide || ""}
-            onChange={(e) =>
-              handleWeightPerSideChange(parseFloat(e.target.value) || 0)
-            }
-          />
+          <input type="number" name="weight-per-side" min={0} step={weightStep} value={weightPerSide || ""} onChange={(e) => handleWeightPerSideChange(parseFloat(e.target.value) || 0)} />
         </div>
       )}
       <div className="set-table__item weight">
@@ -192,20 +162,10 @@ export default function WorkoutSet({
         />
       </div>
       <div className="set-table__item reps">
-        <input
-          type="number"
-          min={0}
-          name="reps"
-          value={reps || ""}
-          onChange={(e) => handleRepsChange(parseInt(e.target.value) || 0)}
-        />
+        <input type="number" min={0} name="reps" value={reps || ""} onChange={(e) => handleRepsChange(parseInt(e.target.value) || 0)} />
       </div>
       <div className="set-table__item remove-set">
-        <ButtonClose
-          ariaLabel="Remove Set"
-          blockName="set"
-          handleClick={handleRemoveSet}
-        />
+        <ButtonClose ariaLabel="Remove Set" blockName="set" handleClick={handleRemoveSet} />
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ import DrawerCalculator from "./components/layout/DrawerCalculator";
 import Footer from "./components/layout/Footer";
 import Header from "./components/layout/Header";
 import DebugAuth from "./components/DebugAuth";
+import SupabaseEnvBanner from "./components/SupabaseEnvBanner";
 import "./styles/main.scss";
 
 const geistSans = Geist({
@@ -25,24 +26,12 @@ export const metadata: Metadata = {
     default: "Shred City - Barbell Plate Calculator",
     template: "%s | Shred City",
   },
-  description:
-    "Fast, equipment-aware barbell and plate calculator for lifters. Enter your target weight and get instant per-side plate breakdown. No mental math between sets.",
-  keywords: [
-    "barbell calculator",
-    "plate calculator",
-    "weightlifting calculator",
-    "gym calculator",
-    "barbell plates",
-    "weight plates",
-    "lifting calculator",
-    "strength training",
-  ],
+  description: "Fast, equipment-aware barbell and plate calculator for lifters. Enter your target weight and get instant per-side plate breakdown. No mental math between sets.",
+  keywords: ["barbell calculator", "plate calculator", "weightlifting calculator", "gym calculator", "barbell plates", "weight plates", "lifting calculator", "strength training"],
   authors: [{ name: "Shred City" }],
   creator: "Shred City",
   publisher: "Shred City",
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://shredcity.com"
-  ),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://shredcity.com"),
   alternates: {
     canonical: "/",
   },
@@ -52,8 +41,7 @@ export const metadata: Metadata = {
     url: "/",
     siteName: "Shred City",
     title: "Shred City - Barbell Plate Calculator",
-    description:
-      "Fast, equipment-aware barbell and plate calculator for lifters. Enter your target weight and get instant per-side plate breakdown.",
+    description: "Fast, equipment-aware barbell and plate calculator for lifters. Enter your target weight and get instant per-side plate breakdown.",
     // Uncomment and add your Open Graph image when ready:
     // images: [
     //   {
@@ -67,8 +55,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Shred City - Barbell Plate Calculator",
-    description:
-      "Fast, equipment-aware barbell and plate calculator for lifters. No mental math between sets.",
+    description: "Fast, equipment-aware barbell and plate calculator for lifters. No mental math between sets.",
     // Uncomment and add your Twitter image when ready:
     // images: ["/twitter-image.png"],
   },
@@ -120,6 +107,7 @@ export default function RootLayout({
               <DebugAuth enabled={false} />
             </DrawerProvider>
           </CalculatorProvider>
+          <SupabaseEnvBanner />
         </AuthProvider>
       </body>
     </html>

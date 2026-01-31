@@ -16,6 +16,11 @@
   line-height: 1;
   background: transparent;
   font-size: 12px;
+
+  &[disabled] {
+    opacity: 0.33;
+    cursor: not-allowed;
+  }
 }
 
 .button--pill-minus,

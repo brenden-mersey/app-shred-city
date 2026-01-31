@@ -15,10 +15,10 @@ This guide will walk you through setting up Supabase authentication with Google 
 
 ## Step 2: Get Your API Keys
 
-1. In your Supabase project dashboard, go to **Settings** → **API**
-2. You'll find two important values:
-   - **Project URL** (e.g., `https://xxxxx.supabase.co`)
-   - **anon/public key** (a long JWT token)
+1. In your Supabase project dashboard, go to **Project Settings** → **API** (or **API Keys** in the left sidebar).
+2. Under **Publishable and secret API keys**, you'll need:
+   - **Project URL** — use this for `NEXT_PUBLIC_SUPABASE_URL` (e.g., `https://xxxxx.supabase.co`)
+   - **Publishable key** — use this for `NEXT_PUBLIC_SUPABASE_ANON_KEY`. It’s in the **Publishable key** section (the key may look like `sb_publishable_...`). This is the key safe to use in the browser when RLS is enabled.
 
 ## Step 3: Set Up Environment Variables
 
@@ -27,13 +27,14 @@ This guide will walk you through setting up Supabase authentication with Google 
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your_project_url_here
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_publishable_key_here
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
-Replace `your_project_url_here` and `your_anon_key_here` with the values from Step 2.
+- **NEXT_PUBLIC_SUPABASE_URL**: Copy the **Project URL** from the API settings.
+- **NEXT_PUBLIC_SUPABASE_ANON_KEY**: Copy the **Publishable key** from the “Publishable key” section (not a secret key).
 
-**For production**, update `NEXT_PUBLIC_SITE_URL` to your actual domain (e.g., `https://shredcity.com`).
+**For production**, update `NEXT_PUBLIC_SITE_URL` to your actual domain (e.g., `https://shred-city.ca`).
 
 ## Step 4: Configure Google OAuth
 
@@ -73,6 +74,7 @@ Replace `your_project_url_here` and `your_anon_key_here` with the values from St
 ## Step 5: Test the Setup
 
 1. Start your development server:
+
    ```bash
    npm run dev
    ```
@@ -85,6 +87,7 @@ Replace `your_project_url_here` and `your_anon_key_here` with the values from St
 ## Step 6: (Optional) Configure Protected Routes
 
 The middleware is currently set up to protect all routes except:
+
 - `/login`
 - `/auth/*` (auth callbacks)
 - `/` (home page)
@@ -94,19 +97,23 @@ To customize which routes are protected, edit `middleware.ts` in the root of you
 ## Troubleshooting
 
 ### "Invalid redirect URI" error
+
 - Make sure the redirect URI in Google Cloud Console matches exactly what Supabase shows
 - Check that you've added both `http://localhost:3000` and your production domain
 
 ### "Redirect URI mismatch" error
+
 - Verify the redirect URIs in Google Cloud Console include the Supabase callback URL
 - Make sure there are no trailing slashes or extra characters
 
 ### Environment variables not loading
+
 - Restart your Next.js dev server after adding `.env.local`
 - Make sure the file is in the root directory (same level as `package.json`)
 - Check that variable names start with `NEXT_PUBLIC_` for client-side access
 
 ### User not redirecting after login
+
 - Check the browser console for errors
 - Verify your `NEXT_PUBLIC_SITE_URL` is set correctly
 - Make sure the callback route handler is working (`/auth/callback`)
@@ -114,6 +121,7 @@ To customize which routes are protected, edit `middleware.ts` in the root of you
 ## Next Steps
 
 Once authentication is working:
+
 - Add user profile management
 - Connect to Supabase database for workout storage
 - Implement data syncing between devices
@@ -124,4 +132,3 @@ Once authentication is working:
 - [Supabase Auth Documentation](https://supabase.com/docs/guides/auth)
 - [Next.js with Supabase Guide](https://supabase.com/docs/guides/auth/server-side/nextjs)
 - [Google OAuth Setup](https://developers.google.com/identity/protocols/oauth2)
-

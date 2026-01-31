@@ -1,13 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState } from "react";
-import {
-  WorkoutSession,
-  Exercise,
-  Series,
-  EquipmentType,
-  WeightUnit,
-} from "@/app/types/workout";
+import { WorkoutSession, Exercise, Series, EquipmentType, WeightUnit } from "@/app/types/workout";
 import { calculateTotalWeight as calculateTotalWeightUtil } from "@/app/utils/workouts/weights";
 
 type WorkoutContextType = {
@@ -20,19 +14,9 @@ type WorkoutContextType = {
   updateExercise: (exerciseId: string, updates: Partial<Exercise>) => void;
 
   // Set management (within exercises)
-  addSet: (
-    exerciseId: string,
-    set: Omit<
-      Exercise["sets"][0],
-      "id" | "timestamp" | "setNumber" | "totalWeight" | "weightUnit"
-    >
-  ) => void;
+  addSet: (exerciseId: string, set: Omit<Exercise["sets"][0], "id" | "timestamp" | "setNumber" | "totalWeight" | "weightUnit">) => void;
   removeSet: (exerciseId: string, setId: string) => void;
-  updateSet: (
-    exerciseId: string,
-    setId: string,
-    updates: Partial<Exercise["sets"][0]>
-  ) => void;
+  updateSet: (exerciseId: string, setId: string, updates: Partial<Exercise["sets"][0]>) => void;
 
   // Weight unit management
   toggleExerciseWeightUnit: (exerciseId: string) => void;
@@ -49,11 +33,7 @@ const WorkoutContext = createContext<WorkoutContextType | undefined>(undefined);
  * @deprecated Use calculateTotalWeightUtil from weights.ts instead
  * Kept for backward compatibility during migration
  */
-function calculateTotalWeight(
-  weightPerSide: number,
-  equipmentType: EquipmentType,
-  barWeight: number = 45
-): number {
+function calculateTotalWeight(weightPerSide: number, equipmentType: EquipmentType, barWeight: number = 45): number {
   switch (equipmentType) {
     case "barbell":
     case "trap-bar":
@@ -73,13 +53,7 @@ function calculateTotalWeight(
   }
 }
 
-export function WorkoutProvider({
-  children,
-  initialWorkout,
-}: {
-  children: React.ReactNode;
-  initialWorkout: WorkoutSession;
-}) {
+export function WorkoutProvider({ children, initialWorkout }: { children: React.ReactNode; initialWorkout: WorkoutSession }) {
   const [workout, setWorkout] = useState<WorkoutSession>(initialWorkout);
 
   // Add an exercise to the workout (with a default set)
@@ -93,12 +67,7 @@ export function WorkoutProvider({
     const defaultSet: Exercise["sets"][0] = {
       id: crypto.randomUUID(),
       weightPerSide: 0,
-      totalWeight: calculateTotalWeightUtil(
-        0,
-        exerciseData.equipmentType,
-        weightUnit,
-        exerciseData.barWeight
-      ),
+      totalWeight: calculateTotalWeightUtil(0, exerciseData.equipmentType, weightUnit, exerciseData.barWeight),
       weightUnit,
       equipmentType: exerciseData.equipmentType,
       reps: 0,
@@ -130,20 +99,30 @@ export function WorkoutProvider({
   const updateExercise = (exerciseId: string, updates: Partial<Exercise>) => {
     setWorkout((prev) => ({
       ...prev,
-      exercises: prev.exercises.map((ex) =>
-        ex.id === exerciseId ? { ...ex, ...updates } : ex
-      ),
+      exercises: prev.exercises.map((ex) => {
+        if (ex.id !== exerciseId) return ex;
+
+        const nextExercise: Exercise = { ...ex, ...updates };
+
+        // If barWeight changes, recompute totalWeight for existing sets that already have a weight entered.
+        // (Keeps empty rows from suddenly showing the bar weight.)
+        if (updates.barWeight !== undefined && updates.barWeight !== ex.barWeight) {
+          nextExercise.sets = ex.sets.map((set) => {
+            if (!set.weightPerSide) return set;
+            return {
+              ...set,
+              totalWeight: calculateTotalWeightUtil(set.weightPerSide, set.equipmentType, set.weightUnit, updates.barWeight),
+            };
+          });
+        }
+
+        return nextExercise;
+      }),
     }));
   };
 
   // Add a set to an exercise
-  const addSet = (
-    exerciseId: string,
-    setData: Omit<
-      Exercise["sets"][0],
-      "id" | "timestamp" | "setNumber" | "totalWeight" | "weightUnit"
-    >
-  ) => {
+  const addSet = (exerciseId: string, setData: Omit<Exercise["sets"][0], "id" | "timestamp" | "setNumber" | "totalWeight" | "weightUnit">) => {
     setWorkout((prev) => ({
       ...prev,
       exercises: prev.exercises.map((ex) => {
@@ -154,12 +133,7 @@ export function WorkoutProvider({
         // Use exercise's weight unit, or workout's default
         const weightUnit = ex.weightUnit || prev.defaultWeightUnit;
 
-        const totalWeight = calculateTotalWeightUtil(
-          setData.weightPerSide,
-          setData.equipmentType,
-          weightUnit,
-          ex.barWeight
-        );
+        const totalWeight = calculateTotalWeightUtil(setData.weightPerSide, setData.equipmentType, weightUnit, ex.barWeight);
 
         const newSet: Exercise["sets"][0] = {
           ...setData,
@@ -201,11 +175,7 @@ export function WorkoutProvider({
   };
 
   // Update a set (e.g., change weight, reps)
-  const updateSet = (
-    exerciseId: string,
-    setId: string,
-    updates: Partial<Exercise["sets"][0]>
-  ) => {
+  const updateSet = (exerciseId: string, setId: string, updates: Partial<Exercise["sets"][0]>) => {
     setWorkout((prev) => ({
       ...prev,
       exercises: prev.exercises.map((ex) => {
@@ -218,22 +188,11 @@ export function WorkoutProvider({
 
             // Recalculate totalWeight if weightPerSide, equipmentType, or weightUnit changed
             let totalWeight = set.totalWeight;
-            if (
-              updates.weightPerSide !== undefined ||
-              updates.equipmentType !== undefined ||
-              updates.weightUnit !== undefined
-            ) {
-              const newWeightPerSide =
-                updates.weightPerSide ?? set.weightPerSide;
-              const newEquipmentType =
-                updates.equipmentType ?? set.equipmentType;
+            if (updates.weightPerSide !== undefined || updates.equipmentType !== undefined || updates.weightUnit !== undefined) {
+              const newWeightPerSide = updates.weightPerSide ?? set.weightPerSide;
+              const newEquipmentType = updates.equipmentType ?? set.equipmentType;
               const newWeightUnit = updates.weightUnit ?? set.weightUnit;
-              totalWeight = calculateTotalWeightUtil(
-                newWeightPerSide,
-                newEquipmentType,
-                newWeightUnit,
-                ex.barWeight
-              );
+              totalWeight = calculateTotalWeightUtil(newWeightPerSide, newEquipmentType, newWeightUnit, ex.barWeight);
             }
 
             return {
@@ -276,12 +235,7 @@ export function WorkoutProvider({
             sets: ex.sets.map((set) => ({
               ...set,
               weightUnit: newUnit,
-              totalWeight: calculateTotalWeightUtil(
-                set.weightPerSide,
-                set.equipmentType,
-                newUnit,
-                ex.barWeight
-              ),
+              totalWeight: calculateTotalWeightUtil(set.weightPerSide, set.equipmentType, newUnit, ex.barWeight),
             })),
           };
         }),
@@ -292,9 +246,7 @@ export function WorkoutProvider({
   // End the workout (set endTime and calculate duration)
   const endWorkout = () => {
     const endTime = new Date();
-    const duration = Math.round(
-      (endTime.getTime() - workout.startTime.getTime()) / 1000 / 60
-    ); // Duration in minutes
+    const duration = Math.round((endTime.getTime() - workout.startTime.getTime()) / 1000 / 60); // Duration in minutes
 
     setWorkout((prev) => ({
       ...prev,
@@ -316,11 +268,7 @@ export function WorkoutProvider({
     endWorkout,
   };
 
-  return (
-    <WorkoutContext.Provider value={contextValue}>
-      {children}
-    </WorkoutContext.Provider>
-  );
+  return <WorkoutContext.Provider value={contextValue}>{children}</WorkoutContext.Provider>;
 }
 
 export function useWorkout() {

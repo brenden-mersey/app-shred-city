@@ -13,11 +13,13 @@ export default function DebugAuth({ enabled }: { enabled: boolean }) {
     return null;
   }
 
-  const { user, loading } = useAuth();
+  const { user, loading, supabaseEnvError } = useAuth();
   const [sessionInfo, setSessionInfo] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (supabaseEnvError) return;
+
     const supabase = createClient();
 
     // Get session info
@@ -46,7 +48,7 @@ export default function DebugAuth({ enabled }: { enabled: boolean }) {
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [supabaseEnvError]);
 
   return (
     <div
@@ -64,10 +66,17 @@ export default function DebugAuth({ enabled }: { enabled: boolean }) {
         border: "1px solid #333",
       }}
     >
-      <h3 style={{ margin: "0 0 0.5rem 0", fontSize: "0.875rem" }}>
-        Auth Debug
-      </h3>
+      <h3 style={{ margin: "0 0 0.5rem 0", fontSize: "0.875rem" }}>Auth Debug</h3>
       <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
+        {supabaseEnvError && (
+          <div style={{ color: "#ffb347", marginBottom: "0.5rem" }}>
+            <strong>Env:</strong>{" "}
+            <a href="https://supabase.com/dashboard/project/_/settings/api" target="_blank" rel="noopener noreferrer" style={{ color: "#7dd3fc", textDecoration: "underline" }}>
+              Supabase not configured
+            </a>
+            — {supabaseEnvError}
+          </div>
+        )}
         <div>
           <strong>Loading:</strong> {loading ? "true" : "false"}
         </div>
@@ -88,9 +97,7 @@ export default function DebugAuth({ enabled }: { enabled: boolean }) {
             <strong>Error:</strong> {error}
           </div>
         )}
-        <div style={{ marginTop: "0.5rem", fontSize: "0.7rem", opacity: 0.7 }}>
-          Check browser console for more details
-        </div>
+        <div style={{ marginTop: "0.5rem", fontSize: "0.7rem", opacity: 0.7 }}>Check browser console for more details</div>
       </div>
     </div>
   );

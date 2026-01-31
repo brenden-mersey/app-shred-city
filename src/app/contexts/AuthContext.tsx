@@ -1,12 +1,14 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { createClient } from "@/app/utils/supabase/client";
+import { createClient, SupabaseEnvError } from "@/app/utils/supabase/client";
 import type { User } from "@supabase/supabase-js";
 
 type AuthContextType = {
   user: User | null;
   loading: boolean;
+  /** Set when Supabase env vars are missing; message includes help link */
+  supabaseEnvError: string | null;
   signOut: () => Promise<void>;
 };
 
@@ -15,9 +17,20 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [supabaseEnvError, setSupabaseEnvError] = useState<string | null>(null);
 
   useEffect(() => {
-    const supabase = createClient();
+    let supabase;
+    try {
+      supabase = createClient();
+    } catch (e) {
+      if (e instanceof SupabaseEnvError) {
+        setSupabaseEnvError(e.message);
+        setLoading(false);
+        return;
+      }
+      throw e;
+    }
 
     // Get initial session
     supabase.auth.getSession().then(({ data: { session }, error }) => {
@@ -41,16 +54,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signOut = async () => {
-    const supabase = createClient();
-    await supabase.auth.signOut();
+    try {
+      const supabase = createClient();
+      await supabase.auth.signOut();
+    } catch (e) {
+      if (e instanceof SupabaseEnvError) {
+        setUser(null);
+        return;
+      }
+      throw e;
+    }
     setUser(null);
   };
 
-  return (
-    <AuthContext.Provider value={{ user, loading, signOut }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ user, loading, supabaseEnvError, signOut }}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
@@ -60,4 +77,3 @@ export function useAuth() {
   }
   return context;
 }
-

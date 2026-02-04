@@ -74,12 +74,12 @@ export default function WorkoutSet({ set, index, exerciseId, displayUnit, barWei
   const [weightPerSide, setWeightPerSide] = useState(set.weightPerSide || 0);
   const [reps, setReps] = useState(set.reps || 0);
 
-  // Sync with set data when it changes
+  // Sync with set data when it changes (e.g. after bar weight or unit change in exercise settings)
   useEffect(() => {
-    setTotalWeight(set.totalWeight || 0);
-    setWeightPerSide(set.weightPerSide || 0);
-    setReps(set.reps || 0);
-  }, [set.totalWeight, set.weightPerSide, set.reps]);
+    setTotalWeight(set.totalWeight ?? 0);
+    setWeightPerSide(set.weightPerSide ?? 0);
+    setReps(set.reps ?? 0);
+  }, [set.id, set.totalWeight, set.weightPerSide, set.reps]);
 
   const handleTotalWeightChange = (value: number) => {
     setTotalWeight(value);

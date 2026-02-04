@@ -22,10 +22,7 @@ $plate-size-small: 80%;
   @extend %rounded-circle;
   color: inherit;
   position: relative;
-  width: min(
-    $plate-size-large,
-    $plate-size-large
-  ); // Will be constrained by container
+  width: min($plate-size-large, $plate-size-large); // Will be constrained by container
   aspect-ratio: 1 / 1; // Perfect square
   max-width: $plate-size-large;
   max-height: $plate-size-large;
@@ -39,8 +36,7 @@ $plate-size-small: 80%;
   &::after,
   &::before {
     @extend %rounded-circle;
-    border: 2px solid
-      color.adjust(map.get($theme-colours, "light-primary"), $alpha: -0.66);
+    border: 2px solid color.adjust(map.get($theme-colours, "light-primary"), $alpha: -0.66);
     content: "";
     position: absolute;
     width: 95%;
@@ -103,6 +99,10 @@ $plate-size-small: 80%;
   justify-content: center;
   width: 100%;
   justify-content: space-between;
+}
+
+.plate__control-button {
+  font-size: 18px;
 }
 
 .plate__count {

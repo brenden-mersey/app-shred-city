@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState } from "react";
 import { WorkoutSession, Exercise, Series, EquipmentType, WeightUnit } from "@/app/types/workout";
-import { calculateTotalWeight as calculateTotalWeightUtil } from "@/app/utils/workouts/weights";
+import { calculateTotalWeight as calculateTotalWeightUtil, usesBarWeight } from "@/app/utils/workouts/weights";
 
 type WorkoutContextType = {
   // Current workout session
@@ -104,14 +104,19 @@ export function WorkoutProvider({ children, initialWorkout }: { children: React.
 
         const nextExercise: Exercise = { ...ex, ...updates };
 
-        // If barWeight changes, recompute totalWeight for existing sets that already have a weight entered.
-        // (Keeps empty rows from suddenly showing the bar weight.)
+        // If barWeight changes, recompute totalWeight for every set whose equipment uses bar weight,
+        // so the weight/total columns stay in sync with the new bar.
         if (updates.barWeight !== undefined && updates.barWeight !== ex.barWeight) {
           nextExercise.sets = ex.sets.map((set) => {
-            if (!set.weightPerSide) return set;
+            if (!usesBarWeight(set.equipmentType)) return set;
             return {
               ...set,
-              totalWeight: calculateTotalWeightUtil(set.weightPerSide, set.equipmentType, set.weightUnit, updates.barWeight),
+              totalWeight: calculateTotalWeightUtil(
+                set.weightPerSide,
+                set.equipmentType,
+                set.weightUnit,
+                updates.barWeight
+              ),
             };
           });
         }

@@ -117,7 +117,7 @@ export default function WorkoutExercise({ exerciseProps }: WorkoutExerciseProps)
               <div className="exercise__setting">
                 <RadioGroup
                   name={`bar-weight-${exerciseProps.id}`}
-                  label={`Bar Weight (${draftWeightUnit.toUpperCase()})`}
+                  label="Bar Weight"
                   options={barWeightOptions.map((w) => String(w))}
                   value={String(selectedBarWeight)}
                   onChange={(val) => setDraftBarWeight(parseFloat(val))}
@@ -129,7 +129,7 @@ export default function WorkoutExercise({ exerciseProps }: WorkoutExerciseProps)
 
             <div className="exercise__setting">
               <button type="button" className="exercise__button-save-settings button button--pill" onClick={handleSaveSettings} disabled={!hasSettingsChanged}>
-                Save changes
+                Save
               </button>
             </div>
           </div>

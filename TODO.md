@@ -10,9 +10,9 @@ Ship a fast, useful plate calculator. Nothing else until this is live.
 
 - [x] Initialize Next.js project with App Router + TypeScript
 - [x] Install and configure SCSS + CSS Modules
-- [ ] Create GitHub repository
-- [ ] Set up deployment (Vercel or Netlify)
-- [ ] Basic folder structure and routing
+- [x] Create GitHub repository
+- [x] Set up deployment (Vercel or Netlify)
+- [x] Basic folder structure and routing
 
 ---
 
@@ -21,8 +21,8 @@ Ship a fast, useful plate calculator. Nothing else until this is live.
 - [ ] Target weight input (number field)
 - [ ] Bar weight setting (45lb default, editable)
 - [ ] Plate inventory editor (which plates are available)
-- [ ] Unit toggle (lbs / kg)
-- [ ] Per-side calculation logic
+- [x] Unit toggle (lbs / kg)
+- [x] Per-side calculation logic
 - [ ] Display: plates needed per side
 - [ ] Display: achieved weight vs target weight
 - [ ] Display: difference (if plates can't hit exact target)

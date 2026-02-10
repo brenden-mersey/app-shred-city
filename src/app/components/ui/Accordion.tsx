@@ -83,47 +83,44 @@ function AccordionRoot({
 
   const contentRef = useRef<HTMLDivElement>(null);
 
-  // GSAP animation when open state changes
+  // GSAP animation when open state changes.
+  // Don't use gsap.context().revert() in cleanup: it runs when isOpen changes and would
+  // revert the previous animation, causing a snap. Only kill tweens so the next run can animate.
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      if (contentRef.current) {
-        if (isOpen) {
-          // Opening animation
-          gsap.to(contentRef.current, {
-            onStart: () => {
-              contentRef.current?.classList.add("opening");
-              contentRef.current?.classList.remove("closing", "closed");
-            },
-            onComplete: () => {
-              contentRef.current?.classList.add("opened");
-              contentRef.current?.classList.remove("opening");
-            },
-            height: "auto",
-            duration: 0.333,
-            ease: "ease",
-            overwrite: true,
-          });
-        } else {
-          // Closing animation
-          gsap.to(contentRef.current, {
-            onStart: () => {
-              contentRef.current?.classList.add("closing");
-              contentRef.current?.classList.remove("opening", "opened");
-            },
-            onComplete: () => {
-              contentRef.current?.classList.remove("closing");
-              contentRef.current?.classList.add("closed");
-            },
-            height: 0,
-            duration: 0.333,
-            ease: "ease",
-            overwrite: true,
-          });
-        }
-      }
-    });
+    const el = contentRef.current;
+    if (!el) return;
 
-    return () => ctx.revert();
+    if (isOpen) {
+      contentRef.current?.classList.add("opening");
+      contentRef.current?.classList.remove("closing", "closed");
+      gsap.to(el, {
+        onComplete: () => {
+          el.classList.add("opened");
+          el.classList.remove("opening");
+        },
+        height: "auto",
+        duration: 0.333,
+        ease: "power2.inOut",
+        overwrite: true,
+      });
+    } else {
+      contentRef.current?.classList.add("closing");
+      contentRef.current?.classList.remove("opening", "opened");
+      gsap.to(el, {
+        onComplete: () => {
+          el.classList.remove("closing");
+          el.classList.add("closed");
+        },
+        height: 0,
+        duration: 0.333,
+        ease: "power2.inOut",
+        overwrite: true,
+      });
+    }
+
+    return () => {
+      gsap.killTweensOf(el);
+    };
   }, [isOpen]);
 
   const toggle = () => {
